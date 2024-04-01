@@ -483,12 +483,21 @@ void SADSRG::H2_T2_C2(BlockedTensor& H2, BlockedTensor& T2, BlockedTensor& S2, c
         else
             blocks.push_back(block);
     }
-
+    // A13
     temp = ambit::BlockedTensor::build(tensor_type_, "temp", blocks);
     temp["jqsb"] -= alpha * H2["aqsm"] * T2["mjba"];
     temp["jqsb"] -= 0.5 * alpha * L1_["xy"] * T2["yjba"] * H2["aqsx"];
     temp["jqsb"] += 0.5 * alpha * L1_["xy"] * T2["ijbx"] * H2["yqsi"];
-
+    // I want to save the temp  and inputs to compare the value of different terms.
+    temp.save("temp.test",true);
+    
+    // I will print blocks label of temp
+    outfile->Printf("Printing temp blocks\n");
+    for (const std::string& block : temp.block_labels()) {
+        outfile->Printf(block+"\n");
+    }   
+    outfile->Printf("End temp blocks\n");
+    //end
     C2["jqsb"] += temp["jqsb"];
     C2["qjbs"] += temp["jqsb"];
 

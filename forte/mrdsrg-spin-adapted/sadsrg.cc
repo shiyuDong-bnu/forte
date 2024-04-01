@@ -27,6 +27,7 @@
  */
 
 #include <numeric>
+#include<string>
 
 #include "psi4/libmints/matrix.h"
 #include "psi4/libmints/molecule.h"
@@ -229,11 +230,36 @@ void SADSRG::read_MOSpaceInfo() {
     actv_mos_ = mo_space_info_->corr_absolute_mo("ACTIVE");
     virt_mos_ = mo_space_info_->corr_absolute_mo("RESTRICTED_UOCC");
     actv_mos_sym_ = mo_space_info_->symmetry("ACTIVE");
+    // pring molecule space information
+    outfile->Printf("Trying to print molecule information\n");
+    outfile->Printf("core_mos_\n");
+    for (int i=0;i<core_mos_.size();i++)
+    {
+        outfile->Printf(std::to_string(core_mos_[i]));
+        outfile->Printf(" ");
+    }
+    outfile->Printf("\n End  core_mos_\n");
 
+    outfile->Printf("\n actv_mos_\n");
+    for (int i=0;i<actv_mos_.size();i++)
+    {
+        outfile->Printf(std::to_string(actv_mos_[i]));
+        outfile->Printf(" ");
+    }
+    outfile->Printf("\n End  print actv_mos_\n");
+    outfile->Printf("\nTrying to print virt_mos_\n");
+    for (int i=0;i<virt_mos_.size();i++)
+    {
+        outfile->Printf(std::to_string(virt_mos_[i]));
+        outfile->Printf(" ");
+    }
+    outfile->Printf("\n End  virt_mos_\n");
+    outfile->Printf("End print molecule information\n");
     if (eri_df_) {
         aux_mos_ = std::vector<size_t>(ints_->nthree());
         std::iota(aux_mos_.begin(), aux_mos_.end(), 0);
     }
+
 }
 
 void SADSRG::set_ambit_MOSpace() {
