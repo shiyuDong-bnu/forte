@@ -57,13 +57,11 @@ L1_.load("./dev/L1_.test");
 const double alpha=1/3.0;
 auto my_temp = ambit::BlockedTensor::build(ambit::CoreTensor, "my_temp", temp_blocks);
 auto diff = ambit::BlockedTensor::build(ambit::CoreTensor, "diff", temp_blocks);
+diff.zero();
 my_temp["jqsb"] -= alpha * H2["aqsm"] * T2["mjba"];
 my_temp["jqsb"] -= 0.5 * alpha * L1_["xy"] * T2["yjba"] * H2["aqsx"];
 my_temp["jqsb"] += 0.5 * alpha * L1_["xy"] * T2["ijbx"] * H2["yqsi"];
 diff["jqsb"]=my_temp["jqsb"]-temp["jqsb"];
-diff.print();
-bool equal;
-equal= my_temp==temp;
-std::cout<<equal;
+std::cout<< diff.norm();
 return 0;
 }
