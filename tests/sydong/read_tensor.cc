@@ -1,7 +1,24 @@
 #include <ambit/blocked_tensor.h>
 #include <iostream>
+#include <vector>
+#include <algorithm>
+bool contains(std::string item,std::vector<std::string> list){
+    auto it = std::find(
+                list.begin(),
+                list.end(),
+                item) ;
+// Checkif iterator is valid  
+    return it != list.end();
+}
+
 int main(void)
-{
+{    // test contrain method;
+    std::vector<std::string> list={"a","b","c"};
+    std::string a ="a";
+    std::string e ="e";
+    std::cout<<" A should  in all block:" <<contains(a,list);
+    std::cout<<" E should not in all block:" <<contains(e,list);
+
 ambit::initialize();
 ambit::BlockedTensor::reset_mo_spaces();
 ambit::BlockedTensor::set_expert_mode(true);
@@ -56,7 +73,7 @@ T2.load("./dev/T2.test");
 L1_.load("./dev/L1_.test");
 const double alpha=1/3.0;
 auto my_temp = ambit::BlockedTensor::build(ambit::CoreTensor, "my_temp", temp_blocks);
-auto element_temp = ambit::BlockedTensor::build(ambit::CoreTensor, "my_temp", temp_blocks);
+auto ele_temp = ambit::BlockedTensor::build(ambit::CoreTensor, "my_temp", temp_blocks);
 auto diff = ambit::BlockedTensor::build(ambit::CoreTensor, "diff", temp_blocks);
 auto t2_diff=ambit::BlockedTensor::build(ambit::CoreTensor, "t2diff", temp_blocks);
 diff.zero();
@@ -72,34 +89,37 @@ std::cout<< "T2 norm " <<T2.norm()<<std::endl;
 std::cout<<"Permutaton norm "<<t2_diff.norm()<<std::endl;
 // split terms
 // compisite index : j(h) q(g) s(g) b(p)
-std::vector<std::string> i_composition_index ={"c0,","a0,"} ;// H:C A
-std::vector<std::string> j_composition_index ={"c1,","a1,"}; // H:C A
-std::vector<std::string> q_composition_index ={"c2,","a2,","v0,"};//  G:C A V
-std::vector<std::string> s_composition_index ={"c3,","a3,","v1,"};//  G:C A V
-std::vector<std::string> b_composition_index ={      "a4,","v2,"};        //  P: A V
-
-for(std::string& j_index:j_composition_index){
-    for(std::string& q_index:q_composition_index){
-        for(std::string& s_index:s_composition_index){
-            for(std::string& b_index:b_composition_index){
-                    std::string jqsb_element_index=j_index+q_index+s_index+b_index;
-                    std::string aqsm_element_index="a,"+q_index+s_index+"m";
-                    std::string mjba_element_index="m,"+j_index+b_index+"a";
-                    element_temp[jqsb_element_index] -= alpha * H2[aqsm_element_index] * T2[mjba_element_index];
-                    std::string yjba_element_index="y,"+j_index+b_index+"a";
-                    std::string aqsx_element_index="a,"+q_index+s_index+"x";
-                    element_temp[jqsb_element_index] -= 0.5 * alpha * L1_["xy"] * T2[yjba_element_index] * H2[aqsx_element_index];
-                    for (std::string&i_index:i_composition_index){
-                        std::string ijbx_element_index=i_index+j_index+b_index+"x";
-                        std::string yqsi_element_index="y,"+q_index+s_index+i_index;
-                        element_temp[jqsb_element_index] += 0.5 * alpha * L1_["xy"] * T2[ijbx_element_index] * H2[yqsi_element_index];
+std::vector<std::string> i_comp_ind ={"c0,","a0,"} ;// H:C A
+std::vector<std::string> j_comp_ind ={"c1,","a1,"}; // H:C A
+std::vector<std::string> q_comp_ind ={"c2,","a2,","v0,"};//  G:C A V
+std::vector<std::string> s_comp_ind ={"c3,","a3,","v1,"};//  G:C A V
+std::vector<std::string> b_comp_ind ={      "a4,","v2,"};        //  P: A V
+std::vector<std::string> caled_blocks;
+for(std::string& j_index:j_comp_ind){
+    for(std::string& q_index:q_comp_ind){
+        for(std::string& s_index:s_comp_ind){
+            for(std::string& b_index:b_comp_ind){
+                    std::string jqsb_ele_ind=j_index+q_index+s_index+b_index;
+                    std::string aqsm_ele_ind="a,"+q_index+s_index+"m";
+                    std::string mjba_ele_ind="m,"+j_index+b_index+"a";
+                    // term 1
+                    ele_temp[jqsb_ele_ind] -= alpha * H2[aqsm_ele_ind] * T2[mjba_ele_ind];
+                    std::string yjba_ele_ind="y,"+j_index+b_index+"a";
+                    std::string aqsx_ele_ind="a,"+q_index+s_index+"x";
+                    // term 2
+                    ele_temp[jqsb_ele_ind] -= 0.5 * alpha * L1_["xy"] * T2[yjba_ele_ind] * H2[aqsx_ele_ind];
+                    for (std::string&i_index:i_comp_ind){
+                        std::string ijbx_ele_ind=i_index+j_index+b_index+"x";
+                        std::string yqsi_ele_ind="y,"+q_index+s_index+i_index;
+                        // term 3
+                        ele_temp[jqsb_ele_ind] += 0.5 * alpha * L1_["xy"] * T2[ijbx_ele_ind] * H2[yqsi_ele_ind];
                     }
             }
         }
     }
 }
 diff.zero();
-diff["jqsb"]=my_temp["jqsb"]-element_temp["jqsb"];
+diff["jqsb"]=my_temp["jqsb"]-ele_temp["jqsb"];
 std::cout<< "element diff: "<< diff.norm();
 return 0;
 }
