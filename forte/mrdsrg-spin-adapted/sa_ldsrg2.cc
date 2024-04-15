@@ -438,6 +438,7 @@ void SA_MRDSRG::compute_hbar_sequential() {
             // two-body
             H1_T2_C2(O1_, T2_, factor, C2_);
             H2_T2_C2(O2_, T2_, DT2_, factor, C2_);
+            // H2_T2_C2(O2_sym, T2_, DT2_, factor, C2_);
         }
 
         // printing level
@@ -461,7 +462,7 @@ void SA_MRDSRG::compute_hbar_sequential() {
         // copy C to O for next level commutator
         O1_["pq"] = C1_["pq"];
         O2_["pqrs"] = C2_["pqrs"];
-
+        // O2_sym["pqrs"] = C2_["pqrs"];
         // test convergence of C
         double norm_C1 = C1_.norm();
         double norm_C2 = C2_.norm();
@@ -587,6 +588,26 @@ void SA_MRDSRG::setup_ldsrg2_tensors() {
             Hbar2_ = BTF_->build(tensor_type_, "Hbar2", {"gggg"});
             O2_ = BTF_->build(tensor_type_, "O2", {"gggg"});
             C2_ = BTF_->build(tensor_type_, "C2", {"gggg"});
+            O2_sym = BTF_->build(tensor_type_, "O2", {   
+                "aaaa","aaav","aaca","aacc","aacv",
+                "aavv","avaa","avac","avav","avca",
+                "avcc","avcv","avva","avvc","avvv",
+                "caaa","caac","caav","caca","cacc",
+                "cacv","cava","cavc","cavv","ccaa",
+                "ccav","ccca","cccc","cccv","ccvv",
+                "cvaa","cvac","cvav","cvca","cvcc",
+                "cvcv","cvva","cvvc","cvvv","vvaa",
+                "vvav","vvca","vvcc","vvcv","vvvv",});
+            C2_sym = BTF_->build(tensor_type_, "C2", {
+                "aaaa","aaav","aaca","aacc","aacv",
+                "aavv","avaa","avac","avav","avca",
+                "avcc","avcv","avva","avvc","avvv",
+                "caaa","caac","caav","caca","cacc",
+                "cacv","cava","cavc","cavv","ccaa",
+                "ccav","ccca","cccc","cccv","ccvv",
+                "cvaa","cvac","cvav","cvca","cvcc",
+                "cvcv","cvva","cvvc","cvvv","vvaa",
+                "vvav","vvca","vvcc","vvcv","vvvv",});
         }
 
         Hbar1_ = BTF_->build(tensor_type_, "Hbar1", {"gg"});
