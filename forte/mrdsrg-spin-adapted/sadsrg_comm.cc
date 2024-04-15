@@ -488,15 +488,73 @@ void SADSRG::H2_T2_C2(BlockedTensor& H2, BlockedTensor& T2, BlockedTensor& S2, c
     temp["jqsb"] -= alpha * H2["aqsm"] * T2["mjba"];
     temp["jqsb"] -= 0.5 * alpha * L1_["xy"] * T2["yjba"] * H2["aqsx"];
     temp["jqsb"] += 0.5 * alpha * L1_["xy"] * T2["ijbx"] * H2["yqsi"];
-    // I want to save the temp  and inputs to compare the value of different terms.
-    temp.save("temp.test",true);
-    
-    // I will print blocks label of temp
-    outfile->Printf("Printing temp blocks\n");
-    for (const std::string& block : temp.block_labels()) {
-        outfile->Printf(block+"\n");
-    }   
-    outfile->Printf("End temp blocks\n");
+    // // I want to save the temp  and inputs to compare the value of different terms.
+    // temp.save("temp.test",true);
+    // L1_.save("L1_.test",true);
+    // T2.save("T2.test",true);
+    // H2.save("H2.test",true);
+    //end
+    C2["jqsb"] += temp["jqsb"];
+    C2["qjbs"] += temp["jqsb"];
+
+    if (print_ > 3) {
+        outfile->Printf("\n    Time for [H2, T2] -> C2 : %12.3f", timer.get());
+    }
+    dsrg_time_.add("222", timer.get());
+}
+void SADSRG::H2_T2_C2_sym(BlockedTensor& H2,BlockedTensor& H2_sym, BlockedTensor& T2, BlockedTensor& S2, const double& alpha,
+                      BlockedTensor& C2) {
+    local_timer timer;
+
+    // particle-particle contractions
+    C2["ijrs"] += alpha * H2["abrs"] * T2["ijab"];
+
+    C2["ijrs"] -= 0.5 * alpha * L1_["xy"] * T2["ijxb"] * H2["ybrs"];
+    C2["jisr"] -= 0.5 * alpha * L1_["xy"] * T2["ijxb"] * H2["ybrs"];
+
+    // hole-hole contractions
+    C2["pqab"] += alpha * H2["pqij"] * T2["ijab"];
+
+    C2["pqab"] -= 0.5 * alpha * Eta1_["xy"] * T2["yjab"] * H2["pqxj"];
+    C2["qpba"] -= 0.5 * alpha * Eta1_["xy"] * T2["yjab"] * H2["pqxj"];
+
+    // hole-particle contractions
+    std::vector<std::string> blocks;
+    for (const std::string& block : C2.block_labels()) {
+        if (block.substr(1, 1) == virt_label_ or block.substr(3, 1) == core_label_)
+            continue;
+        else
+            blocks.push_back(block);
+    }
+
+    auto temp = ambit::BlockedTensor::build(tensor_type_, "temp", blocks);
+    temp["qjsb"] += alpha * H2["aqms"] * S2["mjab"];
+    temp["qjsb"] -= alpha * H2["aqsm"] * T2["mjab"];
+    temp["qjsb"] += 0.5 * alpha * L1_["xy"] * S2["yjab"] * H2["aqxs"];
+    temp["qjsb"] -= 0.5 * alpha * L1_["xy"] * T2["yjab"] * H2["aqsx"];
+    temp["qjsb"] -= 0.5 * alpha * L1_["xy"] * S2["ijxb"] * H2["yqis"];
+    temp["qjsb"] += 0.5 * alpha * L1_["xy"] * T2["ijxb"] * H2["yqsi"];
+
+    C2["qjsb"] += temp["qjsb"];
+    C2["jqbs"] += temp["qjsb"];
+
+    blocks.clear();
+    for (const std::string& block : C2.block_labels()) {
+        if (block.substr(0, 1) == virt_label_ or block.substr(3, 1) == core_label_)
+            continue;
+        else
+            blocks.push_back(block);
+    }
+    // A13
+    temp = ambit::BlockedTensor::build(tensor_type_, "temp", blocks);
+    temp["jqsb"] -= alpha * H2["aqsm"] * T2["mjba"];
+    temp["jqsb"] -= 0.5 * alpha * L1_["xy"] * T2["yjba"] * H2["aqsx"];
+    temp["jqsb"] += 0.5 * alpha * L1_["xy"] * T2["ijbx"] * H2["yqsi"];
+    // // I want to save the temp  and inputs to compare the value of different terms.
+    // temp.save("temp.test",true);
+    // L1_.save("L1_.test",true);
+    // T2.save("T2.test",true);
+    // H2.save("H2.test",true);
     //end
     C2["jqsb"] += temp["jqsb"];
     C2["qjbs"] += temp["jqsb"];
