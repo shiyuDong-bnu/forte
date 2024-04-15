@@ -547,15 +547,28 @@ void SADSRG::H2_T2_C2_sym(BlockedTensor& H2,BlockedTensor& H2_sym, BlockedTensor
     }
     // A13
     temp = ambit::BlockedTensor::build(tensor_type_, "temp", blocks);
-    temp["jqsb"] -= alpha * H2["aqsm"] * T2["mjba"];
+    // temp["jqsb"] -= alpha * H2["aqsm"] * T2["mjba"];
+            temp["j,a2,a3,b,"] -= alpha * H2_sym["a5,a2,a3,c6,"] * T2["c6,j,b,a5,"];
+            temp["j,a2,c3,b,"] -= alpha * H2_sym["a5,a2,c3,c6,"] * T2["c6,j,b,a5,"];
+            temp["j,a2,v3,b,"] -= alpha * H2_sym["a5,a2,v3,c6,"] * T2["c6,j,b,a5,"];
+            temp["j,c2,a3,b,"] -= alpha * H2_sym["a5,c2,a3,c6,"] * T2["c6,j,b,a5,"];
+            temp["j,c2,c3,b,"] -= alpha * H2_sym["a5,c2,c3,c6,"] * T2["c6,j,b,a5,"];
+            temp["j,c2,v3,b,"] -= alpha * H2_sym["a5,c2,v3,c6,"] * T2["c6,j,b,a5,"];
+            temp["j,v2,a3,b,"] -= alpha * H2_sym["a5,v2,a3,c6,"] * T2["c6,j,b,a5,"];
+            temp["j,v2,c3,b,"] -= alpha * H2_sym["a5,v2,c3,c6,"] * T2["c6,j,b,a5,"];//**
+            temp["j,a2,c3,b,"] -= alpha * H2_sym["a2,v5,c6,c3,"] * T2["c6,j,b,v5,"];//** symm
+            temp["j,v2,v3,b,"] -= alpha * H2_sym["a5,v2,v3,c6,"] * T2["c6,j,b,a5,"];
+            temp["j,a2,a3,b,"] -= alpha * H2_sym["v5,a2,a3,c6,"] * T2["c6,j,b,v5,"];
+            temp["j,a2,v3,b,"] -= alpha * H2_sym["v5,a2,v3,c6,"] * T2["c6,j,b,v5,"];
+            temp["j,c2,a3,b,"] -= alpha * H2_sym["v5,c2,a3,c6,"] * T2["c6,j,b,v5,"];
+            temp["j,c2,c3,b,"] -= alpha * H2_sym["v5,c2,c3,c6,"] * T2["c6,j,b,v5,"];
+            temp["j,c2,v3,b,"] -= alpha * H2_sym["v5,c2,v3,c6,"] * T2["c6,j,b,v5,"];
+            temp["j,v2,a3,b,"] -= alpha * H2_sym["v5,v2,a3,c6,"] * T2["c6,j,b,v5,"];
+            temp["j,v2,c3,b,"] -= alpha * H2_sym["v5,v2,c3,c6,"] * T2["c6,j,b,v5,"];
+            temp["j,v2,v3,b,"] -= alpha * H2_sym["v5,v2,v3,c6,"] * T2["c6,j,b,v5,"];
     temp["jqsb"] -= 0.5 * alpha * L1_["xy"] * T2["yjba"] * H2["aqsx"];
     temp["jqsb"] += 0.5 * alpha * L1_["xy"] * T2["ijbx"] * H2["yqsi"];
-    // // I want to save the temp  and inputs to compare the value of different terms.
-    // temp.save("temp.test",true);
-    // L1_.save("L1_.test",true);
-    // T2.save("T2.test",true);
-    // H2.save("H2.test",true);
-    //end
+    
     C2["jqsb"] += temp["jqsb"];
     C2["qjbs"] += temp["jqsb"];
 
