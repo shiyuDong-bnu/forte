@@ -172,6 +172,8 @@ class SA_MRDSRG : public SADSRG {
     /// Temporary two-body Hamiltonian
     ambit::BlockedTensor O2_;
     ambit::BlockedTensor C2_;
+    ambit::BlockedTensor O2_sym;
+    ambit::BlockedTensor C2_sym;
 
     /// Norm of off-diagonal Hbar1 or Hbar2
     double Hbar_od_norm(const int& n, const std::vector<std::string>& blocks);
