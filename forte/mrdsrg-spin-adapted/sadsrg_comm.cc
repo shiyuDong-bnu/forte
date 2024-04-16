@@ -526,7 +526,7 @@ void SADSRG::H2_T2_C2_sym(BlockedTensor& H2,BlockedTensor& H2_sym, BlockedTensor
         else
             blocks.push_back(block);
     }
-
+    // A12
     auto temp = ambit::BlockedTensor::build(tensor_type_, "temp", blocks);
     temp["qjsb"] += alpha * H2["aqms"] * S2["mjab"];
     temp["qjsb"] -= alpha * H2["aqsm"] * T2["mjab"];
@@ -566,13 +566,47 @@ void SADSRG::H2_T2_C2_sym(BlockedTensor& H2,BlockedTensor& H2_sym, BlockedTensor
             temp["j,v2,a3,b,"] -= alpha * H2_sym["v5,v2,a3,c6,"] * T2["c6,j,b,v5,"];
             temp["j,v2,c3,b,"] -= alpha * H2_sym["v5,v2,c3,c6,"] * T2["c6,j,b,v5,"];
             temp["j,v2,v3,b,"] -= alpha * H2_sym["v5,v2,v3,c6,"] * T2["c6,j,b,v5,"];
-    temp["jqsb"] -= 0.5 * alpha * L1_["xy"] * T2["yjba"] * H2["aqsx"];
-    temp["jqsb"] += 0.5 * alpha * L1_["xy"] * T2["ijbx"] * H2["yqsi"];
-    
+    // temp["jqsb"] -= 0.5 * alpha * L1_["xy"] * T2["yjba"] * H2["aqsx"];
+           temp["j,a2,a3,b,"] -= 0.5 * alpha * L1_["a7,y,"] * T2["y,j,b,a5,"] * H2["a5,a2,a3,a7,"];//  aaaa 
+           temp["j,a2,c3,b,"] -= 0.5 * alpha * L1_["a7,y,"] * T2["y,j,b,a5,"] * H2["a5,a2,c3,a7,"];//  aaca 
+           temp["j,a2,v3,b,"] -= 0.5 * alpha * L1_["a7,y,"] * T2["y,j,b,a5,"] * H2["a5,a2,v3,a7,"];//  aava 
+           temp["j,c2,a3,b,"] -= 0.5 * alpha * L1_["a7,y,"] * T2["y,j,b,a5,"] * H2["a5,c2,a3,a7,"];//  acaa 
+           temp["j,c2,c3,b,"] -= 0.5 * alpha * L1_["a7,y,"] * T2["y,j,b,a5,"] * H2["a5,c2,c3,a7,"];//  acca 
+           temp["j,c2,v3,b,"] -= 0.5 * alpha * L1_["a7,y,"] * T2["y,j,b,a5,"] * H2["a5,c2,v3,a7,"];//  acva 
+           temp["j,v2,a3,b,"] -= 0.5 * alpha * L1_["a7,y,"] * T2["y,j,b,a5,"] * H2["a5,v2,a3,a7,"];//  avaa 
+           temp["j,a2,a3,b,"] -= 0.5 * alpha * L1_["a7,y,"] * T2["y,j,b,v5,"] * H2["a2,v5,a7,a3,"];//  **** 
+           temp["j,v2,c3,b,"] -= 0.5 * alpha * L1_["a7,y,"] * T2["y,j,b,a5,"] * H2["a5,v2,c3,a7,"];//  avca 
+           temp["j,v2,v3,b,"] -= 0.5 * alpha * L1_["a7,y,"] * T2["y,j,b,a5,"] * H2["a5,v2,v3,a7,"];//  avva 
+           temp["j,a2,c3,b,"] -= 0.5 * alpha * L1_["a7,y,"] * T2["y,j,b,v5,"] * H2["v5,a2,c3,a7,"];//  vaca 
+           temp["j,a2,v3,b,"] -= 0.5 * alpha * L1_["a7,y,"] * T2["y,j,b,v5,"] * H2["v5,a2,v3,a7,"];//  vava 
+           temp["j,c2,a3,b,"] -= 0.5 * alpha * L1_["a7,y,"] * T2["y,j,b,v5,"] * H2["v5,c2,a3,a7,"];//  vcaa 
+           temp["j,c2,c3,b,"] -= 0.5 * alpha * L1_["a7,y,"] * T2["y,j,b,v5,"] * H2["v5,c2,c3,a7,"];//  vcca 
+           temp["j,c2,v3,b,"] -= 0.5 * alpha * L1_["a7,y,"] * T2["y,j,b,v5,"] * H2["v5,c2,v3,a7,"];//  vcva 
+           temp["j,v2,a3,b,"] -= 0.5 * alpha * L1_["a7,y,"] * T2["y,j,b,v5,"] * H2["v5,v2,a3,a7,"];//  vvaa 
+           temp["j,v2,c3,b,"] -= 0.5 * alpha * L1_["a7,y,"] * T2["y,j,b,v5,"] * H2["v5,v2,c3,a7,"];//  vvca 
+           temp["j,v2,v3,b,"] -= 0.5 * alpha * L1_["a7,y,"] * T2["y,j,b,v5,"] * H2["v5,v2,v3,a7,"];//  vvva 
+//    temp["jqsb"] += 0.5 * alpha * L1_["xy"] * T2["ijbx"] * H2["yqsi"];
+            temp["j,a2,a3,b,"] += 0.5 * alpha * L1_["x,a8,"] * T2["a9,j,b,x,"] * H2["a8,a2,a3,a9,"];// aaaa
+            temp["j,a2,c3,b,"] += 0.5 * alpha * L1_["x,a8,"] * T2["a9,j,b,x,"] * H2["a8,a2,c3,a9,"];// aaca
+            temp["j,a2,a3,b,"] += 0.5 * alpha * L1_["x,a8,"] * T2["c9,j,b,x,"] * H2["a2,a8,c9,a3,"];// ****
+            temp["j,a2,c3,b,"] += 0.5 * alpha * L1_["x,a8,"] * T2["c9,j,b,x,"] * H2["a8,a2,c3,c9,"];// aacc
+            temp["j,a2,v3,b,"] += 0.5 * alpha * L1_["x,a8,"] * T2["a9,j,b,x,"] * H2["a8,a2,v3,a9,"];// aava
+            temp["j,a2,v3,b,"] += 0.5 * alpha * L1_["x,a8,"] * T2["c9,j,b,x,"] * H2["a8,a2,v3,c9,"];// aavc
+            temp["j,c2,a3,b,"] += 0.5 * alpha * L1_["x,a8,"] * T2["a9,j,b,x,"] * H2["a8,c2,a3,a9,"];// acaa
+            temp["j,c2,a3,b,"] += 0.5 * alpha * L1_["x,a8,"] * T2["c9,j,b,x,"] * H2["a8,c2,a3,c9,"];// acac
+            temp["j,c2,c3,b,"] += 0.5 * alpha * L1_["x,a8,"] * T2["a9,j,b,x,"] * H2["a8,c2,c3,a9,"];// acca
+            temp["j,c2,c3,b,"] += 0.5 * alpha * L1_["x,a8,"] * T2["c9,j,b,x,"] * H2["a8,c2,c3,c9,"];// accc
+            temp["j,c2,v3,b,"] += 0.5 * alpha * L1_["x,a8,"] * T2["a9,j,b,x,"] * H2["a8,c2,v3,a9,"];// acva
+            temp["j,c2,v3,b,"] += 0.5 * alpha * L1_["x,a8,"] * T2["c9,j,b,x,"] * H2["a8,c2,v3,c9,"];// acvc
+            temp["j,v2,a3,b,"] += 0.5 * alpha * L1_["x,a8,"] * T2["a9,j,b,x,"] * H2["a8,v2,a3,a9,"];// avaa
+            temp["j,v2,a3,b,"] += 0.5 * alpha * L1_["x,a8,"] * T2["c9,j,b,x,"] * H2["a8,v2,a3,c9,"];// avac
+            temp["j,v2,c3,b,"] += 0.5 * alpha * L1_["x,a8,"] * T2["a9,j,b,x,"] * H2["a8,v2,c3,a9,"];// avca
+            temp["j,v2,c3,b,"] += 0.5 * alpha * L1_["x,a8,"] * T2["c9,j,b,x,"] * H2["a8,v2,c3,c9,"];// avcc
+            temp["j,v2,v3,b,"] += 0.5 * alpha * L1_["x,a8,"] * T2["a9,j,b,x,"] * H2["a8,v2,v3,a9,"];// avva
+            temp["j,v2,v3,b,"] += 0.5 * alpha * L1_["x,a8,"] * T2["c9,j,b,x,"] * H2["a8,v2,v3,c9,"];// avvc  
     C2["jqsb"] += temp["jqsb"];
     C2["qjbs"] += temp["jqsb"];
-
-    if (print_ > 3) {
+if (print_ > 3) {
         outfile->Printf("\n    Time for [H2, T2] -> C2 : %12.3f", timer.get());
     }
     dsrg_time_.add("222", timer.get());
