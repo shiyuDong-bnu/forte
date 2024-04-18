@@ -5,7 +5,8 @@ using namespace std;
 int main(void){
 map<string,string> permutaion_map;
 map<string,vector<string>> symemtry_map;
-vector<string> i_comp_ind ={"c0,","a0,"} ;// H:C A
+map<string,vector<string>> result_map;
+vector<string> i_comp_ind ={"c0,","a0,"};// H:C A
 vector<string> j_comp_ind ={"c1,","a1,"}; // H:C A
 vector<string> q_comp_ind ={"c2,","a2,","v0,"};//  G:C A V
 vector<string> s_comp_ind ={"c3,","a3,","v1,"};//  G:C A V
@@ -29,13 +30,25 @@ for(std::string& q_index:q_comp_ind){
                 vector<string> individual;
                 individual.push_back(aqsm_ele_ind);
                 symemtry_map[space_index]=individual;
-            }    
+            }
+    
         }
     }
 }
 for (const auto& n : symemtry_map){
     std::cout << n.first<<" ";
-    std::cout << n.second.size()<<endl;
+    for (const auto& ind: n.second)
+    std::cout << ind <<endl;
 }
 return 0;
+}
+// 
+void compond_to_reduced_individual(){
+    /*
+    input is compond index 
+    output is elemental index ; with symmetry in a map .
+    before
+    for compond_index
+    now for symmetrized_elemetal_index.
+    */
 }
