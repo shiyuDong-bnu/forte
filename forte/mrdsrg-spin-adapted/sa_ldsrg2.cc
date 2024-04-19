@@ -28,7 +28,8 @@
  */
 
 #include <cctype>
-
+#include <string>
+#include <ambit>
 #include "psi4/libdiis/diismanager.h"
 #include "psi4/libpsi4util/PsiOutStream.h"
 
@@ -287,6 +288,9 @@ void SA_MRDSRG::compute_hbar() {
         }
         if (std::sqrt(norm_C2 * norm_C2 + norm_C1 * norm_C1) < rsc_conv_) {
             converged = true;
+            std::cout<<"After converge, save O2_"<<std::endl;
+            string filename="O2_at_"+to_string(n);
+            ambit::save(O2_,filename,true);
             break;
         }
     }
