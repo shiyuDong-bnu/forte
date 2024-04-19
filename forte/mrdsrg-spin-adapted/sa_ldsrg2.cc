@@ -29,7 +29,6 @@
 
 #include <cctype>
 #include <string>
-#include <ambit>
 #include "psi4/libdiis/diismanager.h"
 #include "psi4/libpsi4util/PsiOutStream.h"
 
@@ -141,6 +140,7 @@ double SA_MRDSRG::compute_energy_ldsrg2() {
         double rms = T1rms_ > T2rms_ ? T1rms_ : T2rms_;
         if (std::fabs(Edelta) < e_conv_ && rms < r_conv_) {
             converged = true;
+            
             break;
         }
 
@@ -175,7 +175,11 @@ double SA_MRDSRG::compute_energy_ldsrg2() {
 
     // dump amplitudes to disk
     dump_amps_to_disk();
-
+    // dump H2 and T2
+    std::cout<<"After converge, save T2"<<std::endl;
+    T2_.save("T2_final",true);
+    Hbar2_.save("final_Hbar2_",true);
+    std::cout<<"lll";
     // fail to converge
     if (!converged) {
         clean_checkpoints(); // clean amplitudes in scratch directory
@@ -195,12 +199,12 @@ void SA_MRDSRG::compute_hbar() {
     // copy bare Hamiltonian to Hbar
     Hbar0_ = 0.0;
     Hbar1_["pq"] = F_["pq"];
-
     if (eri_df_) {
         Hbar2_["pqrs"] = B_["gpr"] * B_["gqs"];
     } else {
         Hbar2_["pqrs"] = V_["pqrs"];
         O2_["pqrs"] = Hbar2_["pqrs"];
+        Hbar2_.save("inital_Hbar2_",true);
     }
 
     // temporary Hamiltonian used in every iteration
@@ -288,9 +292,6 @@ void SA_MRDSRG::compute_hbar() {
         }
         if (std::sqrt(norm_C2 * norm_C2 + norm_C1 * norm_C1) < rsc_conv_) {
             converged = true;
-            std::cout<<"After converge, save O2_"<<std::endl;
-            string filename="O2_at_"+to_string(n);
-            ambit::save(O2_,filename,true);
             break;
         }
     }
