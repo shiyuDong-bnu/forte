@@ -244,7 +244,8 @@ void SA_MRDSRG::compute_hbar() {
             V_T2_C1_DF(B_, T2_, DT2_, factor, C1_);
         } else {
             H2_T1_C1(O2_, T1_, factor, C1_);
-            H2_T2_C1(O2_, T2_, DT2_, factor, C1_);
+            // H2_T2_C1(O2_, T2_, DT2_, factor, C1_);
+            H2_T2_C1_sym(O2_, O2_sym,T2_, DT2_, factor, C1_);
         }
 
         // two-body

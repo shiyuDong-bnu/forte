@@ -408,6 +408,67 @@ void SADSRG::H2_T2_C1(BlockedTensor& H2, BlockedTensor& T2, BlockedTensor& S2, c
     dsrg_time_.add("221", timer.get());
 }
 
+void SADSRG::H2_T2_C1_sym(BlockedTensor& H2, BlockedTensor& H2_sym,BlockedTensor& T2, BlockedTensor& S2, const double& alpha,
+                  BlockedTensor& C1){
+    local_timer timer;
+    std::cout<<"Testing function";
+    // [Hbar2, T2] (C_2)^3 -> C1 particle contractions
+    C1["ir"] += alpha * H2["abrm"] * S2["imab"];
+
+    C1["ir"] += 0.5 * alpha * L1_["uv"] * S2["ivab"] * H2["abru"];
+
+    C1["ir"] += 0.25 * alpha * S2["ijux"] * L1_["xy"] * L1_["uv"] * H2["vyrj"];
+
+    C1["ir"] -= 0.5 * alpha * L1_["uv"] * S2["imub"] * H2["vbrm"];
+    C1["ir"] -= 0.5 * alpha * L1_["uv"] * S2["miub"] * H2["bvrm"];
+
+    C1["ir"] -= 0.25 * alpha * S2["iyub"] * L1_["uv"] * L1_["xy"] * H2["vbrx"];
+    C1["ir"] -= 0.25 * alpha * S2["iybu"] * L1_["uv"] * L1_["xy"] * H2["bvrx"];
+
+    // [Hbar2, T2] C_4 C_2 2:2 -> C1 ir
+    C1["ir"] += 0.5 * alpha * T2["ijxy"] * L2_["xyuv"] * H2["uvrj"];
+
+    C1["ir"] += 0.5 * alpha * H2["aurx"] * S2["ivay"] * L2_["xyuv"];
+    C1["ir"] -= 0.5 * alpha * H2["uarx"] * T2["ivay"] * L2_["xyuv"];
+    C1["ir"] -= 0.5 * alpha * H2["uarx"] * T2["ivya"] * L2_["xyvu"];
+
+    // [Hbar2, T2] (C_2)^3 -> C1 hole contractions
+    C1["pa"] -= alpha * H2["peij"] * S2["ijae"];
+
+    C1["pa"] -= 0.5 * alpha * Eta1_["uv"] * S2["ijau"] * H2["pvij"];
+
+    C1["pa"] -= 0.25 * alpha * S2["vyab"] * Eta1_["uv"] * Eta1_["xy"] * H2["pbux"];
+
+    C1["pa"] += 0.5 * alpha * Eta1_["uv"] * S2["vjae"] * H2["peuj"];
+    C1["pa"] += 0.5 * alpha * Eta1_["uv"] * S2["jvae"] * H2["peju"];
+
+    C1["pa"] += 0.25 * alpha * S2["vjax"] * Eta1_["uv"] * Eta1_["xy"] * H2["pyuj"];
+    C1["pa"] += 0.25 * alpha * S2["jvax"] * Eta1_["xy"] * Eta1_["uv"] * H2["pyju"];
+
+    // [Hbar2, T2] C_4 C_2 2:2 -> C1 pa
+    C1["pa"] -= 0.5 * alpha * L2_["xyuv"] * T2["uvab"] * H2["pbxy"];
+
+    C1["pa"] -= 0.5 * alpha * H2["puix"] * S2["ivay"] * L2_["xyuv"];
+    C1["pa"] += 0.5 * alpha * H2["puxi"] * T2["ivay"] * L2_["xyuv"];
+    C1["pa"] += 0.5 * alpha * H2["puxi"] * T2["viay"] * L2_["xyvu"];
+
+    // [Hbar2, T2] C_4 C_2 1:3 -> C1
+    C1["jb"] += 0.5 * alpha * H2["avxy"] * S2["ujab"] * L2_["xyuv"];
+
+    C1["jb"] -= 0.5 * alpha * H2["uviy"] * S2["ijxb"] * L2_["xyuv"];
+
+    C1["qs"] += alpha * H2["eqxs"] * T2["uvey"] * L2_["xyuv"];
+    C1["qs"] -= 0.5 * alpha * H2["eqsx"] * T2["uvey"] * L2_["xyuv"];
+
+    C1["qs"] -= alpha * H2["uqms"] * T2["mvxy"] * L2_["xyuv"];
+    C1["qs"] += 0.5 * alpha * H2["uqsm"] * T2["mvxy"] * L2_["xyuv"];
+
+    if (print_ > 3) {
+        outfile->Printf("\n    Time for [H2, T2] -> C1 : %12.3f", timer.get());
+    }
+    dsrg_time_.add("221", timer.get());
+}
+
 void SADSRG::H1_T2_C2(BlockedTensor& H1, BlockedTensor& T2, const double& alpha,
                       BlockedTensor& C2) {
     local_timer timer;
