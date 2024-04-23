@@ -514,7 +514,25 @@ void SADSRG::H2_T2_C2_sym(BlockedTensor& H2,BlockedTensor& H2_sym, BlockedTensor
     // hole-hole contractions
     C2["pqab"] += alpha * H2["pqij"] * T2["ijab"];
 
-    C2["pqab"] -= 0.5 * alpha * Eta1_["xy"] * T2["yjab"] * H2["pqxj"];
+    // C2["pqab"] -= 0.5 * alpha * Eta1_["xy"] * T2["yjab"] * H2["pqxj"];
+C2["a2,a3,a,b,"] -= 0.5 * alpha * Eta1_["a7,y,"] * T2["y,a1,a,b,"] * H2_sym["a2,a3,a7,a1,"];//aaaa
+C2["a2,a3,a,b,"] -= 0.5 * alpha * Eta1_["a7,y,"] * T2["y,c1,a,b,"] * H2_sym["a3,a2,c1,a7,"];//aaca****
+C2["a2,v3,a,b,"] -= 0.5 * alpha * Eta1_["a7,y,"] * T2["y,a1,a,b,"] * H2_sym["a2,v3,a7,a1,"];//avaa
+C2["v2,a3,a,b,"] -= 0.5 * alpha * Eta1_["a7,y,"] * T2["y,a1,a,b,"] * H2_sym["a3,v2,a1,a7,"];//avaa****
+C2["a2,v3,a,b,"] -= 0.5 * alpha * Eta1_["a7,y,"] * T2["y,c1,a,b,"] * H2_sym["a2,v3,a7,c1,"];//avac
+C2["v2,a3,a,b,"] -= 0.5 * alpha * Eta1_["a7,y,"] * T2["y,c1,a,b,"] * H2_sym["a3,v2,c1,a7,"];//avca****
+C2["c2,a3,a,b,"] -= 0.5 * alpha * Eta1_["a7,y,"] * T2["y,a1,a,b,"] * H2_sym["c2,a3,a7,a1,"];//caaa
+C2["a2,c3,a,b,"] -= 0.5 * alpha * Eta1_["a7,y,"] * T2["y,a1,a,b,"] * H2_sym["c3,a2,a1,a7,"];//caaa****
+C2["c2,a3,a,b,"] -= 0.5 * alpha * Eta1_["a7,y,"] * T2["y,c1,a,b,"] * H2_sym["c2,a3,a7,c1,"];//caac
+C2["a2,c3,a,b,"] -= 0.5 * alpha * Eta1_["a7,y,"] * T2["y,c1,a,b,"] * H2_sym["c3,a2,c1,a7,"];//caca****
+C2["c2,c3,a,b,"] -= 0.5 * alpha * Eta1_["a7,y,"] * T2["y,a1,a,b,"] * H2_sym["c2,c3,a7,a1,"];//ccaa
+C2["c2,c3,a,b,"] -= 0.5 * alpha * Eta1_["a7,y,"] * T2["y,c1,a,b,"] * H2_sym["c3,c2,c1,a7,"];//ccca****
+C2["c2,v3,a,b,"] -= 0.5 * alpha * Eta1_["a7,y,"] * T2["y,a1,a,b,"] * H2_sym["c2,v3,a7,a1,"];//cvaa
+C2["v2,c3,a,b,"] -= 0.5 * alpha * Eta1_["a7,y,"] * T2["y,a1,a,b,"] * H2_sym["c3,v2,a1,a7,"];//cvaa****
+C2["c2,v3,a,b,"] -= 0.5 * alpha * Eta1_["a7,y,"] * T2["y,c1,a,b,"] * H2_sym["c2,v3,a7,c1,"];//cvac
+C2["v2,c3,a,b,"] -= 0.5 * alpha * Eta1_["a7,y,"] * T2["y,c1,a,b,"] * H2_sym["c3,v2,c1,a7,"];//cvca****
+C2["v2,v3,a,b,"] -= 0.5 * alpha * Eta1_["a7,y,"] * T2["y,a1,a,b,"] * H2_sym["v2,v3,a7,a1,"];//vvaa
+C2["v2,v3,a,b,"] -= 0.5 * alpha * Eta1_["a7,y,"] * T2["y,c1,a,b,"] * H2_sym["v3,v2,c1,a7,"];//vvca****
     // C2["qpba"] -= 0.5 * alpha * Eta1_["xy"] * T2["yjab"] * H2["pqxj"];
 C2["a3,a2,b,a,"] -= 0.5 * alpha * Eta1_["a7,y,"] * T2["y,a1,a,b,"] * H2_sym["a2,a3,a7,a1,"];//aaaa
 C2["a3,a2,b,a,"] -= 0.5 * alpha * Eta1_["a7,y,"] * T2["y,c1,a,b,"] * H2_sym["a3,a2,c1,a7,"];//aaca****
