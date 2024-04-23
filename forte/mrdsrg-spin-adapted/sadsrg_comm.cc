@@ -528,7 +528,25 @@ void SADSRG::H2_T2_C2_sym(BlockedTensor& H2,BlockedTensor& H2_sym, BlockedTensor
 
     auto temp = ambit::BlockedTensor::build(tensor_type_, "temp", blocks);
     temp["qjsb"] += alpha * H2["aqms"] * S2["mjab"];
-    temp["qjsb"] -= alpha * H2["aqsm"] * T2["mjab"];
+    // temp["qjsb"] -= alpha * H2["aqsm"] * T2["mjab"];
+temp["a2,j,a3,b,"] -= alpha * H2_sym["a2,a5,c6,a3,"] * T2["c6,j,a5,b,"];//aaca****
+temp["a2,j,c3,b,"] -= alpha * H2_sym["a5,a2,c3,c6,"] * T2["c6,j,a5,b,"];//aacc
+temp["a2,j,v3,b,"] -= alpha * H2_sym["a2,a5,c6,v3,"] * T2["c6,j,a5,b,"];//aacv****
+temp["v2,j,a3,b,"] -= alpha * H2_sym["a5,v2,a3,c6,"] * T2["c6,j,a5,b,"];//avac
+temp["a2,j,a3,b,"] -= alpha * H2_sym["a2,v5,c6,a3,"] * T2["c6,j,v5,b,"];//avca****
+temp["v2,j,c3,b,"] -= alpha * H2_sym["a5,v2,c3,c6,"] * T2["c6,j,a5,b,"];//avcc
+temp["a2,j,c3,b,"] -= alpha * H2_sym["a2,v5,c6,c3,"] * T2["c6,j,v5,b,"];//avcc****
+temp["a2,j,v3,b,"] -= alpha * H2_sym["a2,v5,c6,v3,"] * T2["c6,j,v5,b,"];//avcv****
+temp["v2,j,v3,b,"] -= alpha * H2_sym["a5,v2,v3,c6,"] * T2["c6,j,a5,b,"];//avvc
+temp["c2,j,a3,b,"] -= alpha * H2_sym["c2,a5,c6,a3,"] * T2["c6,j,a5,b,"];//caca****
+temp["c2,j,c3,b,"] -= alpha * H2_sym["c2,a5,c6,c3,"] * T2["c6,j,a5,b,"];//cacc****
+temp["c2,j,v3,b,"] -= alpha * H2_sym["c2,a5,c6,v3,"] * T2["c6,j,a5,b,"];//cacv****
+temp["c2,j,a3,b,"] -= alpha * H2_sym["c2,v5,c6,a3,"] * T2["c6,j,v5,b,"];//cvca****
+temp["c2,j,c3,b,"] -= alpha * H2_sym["c2,v5,c6,c3,"] * T2["c6,j,v5,b,"];//cvcc****
+temp["c2,j,v3,b,"] -= alpha * H2_sym["c2,v5,c6,v3,"] * T2["c6,j,v5,b,"];//cvcv****
+temp["v2,j,a3,b,"] -= alpha * H2_sym["v2,v5,c6,a3,"] * T2["c6,j,v5,b,"];//vvca****
+temp["v2,j,c3,b,"] -= alpha * H2_sym["v5,v2,c3,c6,"] * T2["c6,j,v5,b,"];//vvcc
+temp["v2,j,v3,b,"] -= alpha * H2_sym["v2,v5,c6,v3,"] * T2["c6,j,v5,b,"];//vvcv****
     // temp["qjsb"] += 0.5 * alpha * L1_["xy"] * S2["yjab"] * H2["aqxs"];
 temp["a3,j,a2,b,"] += 0.5 * alpha * L1_["a7,y,"] * S2["y,j,a5,b,"] * H2_sym["a5,a3,a7,a2,"];//aaaa
 temp["a3,j,v2,b,"] += 0.5 * alpha * L1_["a7,y,"] * S2["y,j,a5,b,"] * H2_sym["a5,a3,a7,v2,"];//aaav
