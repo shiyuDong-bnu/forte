@@ -439,6 +439,21 @@ void SADSRG::H2_T1_C2(BlockedTensor& H2, BlockedTensor& T1, const double& alpha,
     }
     dsrg_time_.add("212", timer.get());
 }
+void SADSRG::H2_T1_C2_sym(BlockedTensor& H2, BlockedTensor& H2_sym,BlockedTensor& T1, const double& alpha,
+                      BlockedTensor& C2) {
+    local_timer timer;
+
+    C2["irpq"] += alpha * T1["ia"] * H2["arpq"];
+    C2["riqp"] += alpha * T1["ia"] * H2["arpq"];
+
+    C2["rsaq"] -= alpha * T1["ia"] * H2["rsiq"];
+    C2["srqa"] -= alpha * T1["ia"] * H2["rsiq"];
+
+    if (print_ > 3) {
+        outfile->Printf("\n    Time for [H2, T1] -> C2 : %12.3f", timer.get());
+    }
+    dsrg_time_.add("212", timer.get());
+}
 
 void SADSRG::H2_T2_C2(BlockedTensor& H2, BlockedTensor& T2, BlockedTensor& S2, const double& alpha,
                       BlockedTensor& C2) {
