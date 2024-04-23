@@ -531,7 +531,26 @@ void SADSRG::H2_T2_C2_sym(BlockedTensor& H2,BlockedTensor& H2_sym, BlockedTensor
     temp["qjsb"] -= alpha * H2["aqsm"] * T2["mjab"];
     temp["qjsb"] += 0.5 * alpha * L1_["xy"] * S2["yjab"] * H2["aqxs"];
     temp["qjsb"] -= 0.5 * alpha * L1_["xy"] * T2["yjab"] * H2["aqsx"];
-    temp["qjsb"] -= 0.5 * alpha * L1_["xy"] * S2["ijxb"] * H2["yqis"];
+    // temp["qjsb"] -= 0.5 * alpha * L1_["xy"] * S2["ijxb"] * H2["yqis"];
+    std::cout<<"changing code";
+temp["a3,j,a2,b,"] -= 0.5 * alpha * L1_["x,a8,"] * S2["a9,j,x,b,"] * H2_sym["a8,a3,a9,a2,"];//aaaa
+temp["a3,j,v2,b,"] -= 0.5 * alpha * L1_["x,a8,"] * S2["a9,j,x,b,"] * H2_sym["a8,a3,a9,v2,"];//aaav
+temp["a3,j,a2,b,"] -= 0.5 * alpha * L1_["x,a8,"] * S2["c9,j,x,b,"] * H2_sym["a8,a3,c9,a2,"];//aaca
+temp["a3,j,c2,b,"] -= 0.5 * alpha * L1_["x,a8,"] * S2["a9,j,x,b,"] * H2_sym["a3,a8,c2,a9,"];//aaca****
+temp["a3,j,c2,b,"] -= 0.5 * alpha * L1_["x,a8,"] * S2["c9,j,x,b,"] * H2_sym["a8,a3,c9,c2,"];//aacc
+temp["a3,j,v2,b,"] -= 0.5 * alpha * L1_["x,a8,"] * S2["c9,j,x,b,"] * H2_sym["a8,a3,c9,v2,"];//aacv
+temp["v3,j,a2,b,"] -= 0.5 * alpha * L1_["x,a8,"] * S2["a9,j,x,b,"] * H2_sym["a8,v3,a9,a2,"];//avaa
+temp["v3,j,c2,b,"] -= 0.5 * alpha * L1_["x,a8,"] * S2["a9,j,x,b,"] * H2_sym["a8,v3,a9,c2,"];//avac
+temp["v3,j,v2,b,"] -= 0.5 * alpha * L1_["x,a8,"] * S2["a9,j,x,b,"] * H2_sym["a8,v3,a9,v2,"];//avav
+temp["v3,j,a2,b,"] -= 0.5 * alpha * L1_["x,a8,"] * S2["c9,j,x,b,"] * H2_sym["a8,v3,c9,a2,"];//avca
+temp["v3,j,c2,b,"] -= 0.5 * alpha * L1_["x,a8,"] * S2["c9,j,x,b,"] * H2_sym["a8,v3,c9,c2,"];//avcc
+temp["v3,j,v2,b,"] -= 0.5 * alpha * L1_["x,a8,"] * S2["c9,j,x,b,"] * H2_sym["a8,v3,c9,v2,"];//avcv
+temp["c3,j,a2,b,"] -= 0.5 * alpha * L1_["x,a8,"] * S2["a9,j,x,b,"] * H2_sym["c3,a8,a2,a9,"];//caaa****
+temp["c3,j,a2,b,"] -= 0.5 * alpha * L1_["x,a8,"] * S2["c9,j,x,b,"] * H2_sym["c3,a8,a2,c9,"];//caac****
+temp["c3,j,c2,b,"] -= 0.5 * alpha * L1_["x,a8,"] * S2["a9,j,x,b,"] * H2_sym["c3,a8,c2,a9,"];//caca****
+temp["c3,j,c2,b,"] -= 0.5 * alpha * L1_["x,a8,"] * S2["c9,j,x,b,"] * H2_sym["c3,a8,c2,c9,"];//cacc****
+temp["c3,j,v2,b,"] -= 0.5 * alpha * L1_["x,a8,"] * S2["a9,j,x,b,"] * H2_sym["c3,a8,v2,a9,"];//cava****
+temp["c3,j,v2,b,"] -= 0.5 * alpha * L1_["x,a8,"] * S2["c9,j,x,b,"] * H2_sym["c3,a8,v2,c9,"];//cavc****
     // temp["qjsb"] += 0.5 * alpha * L1_["xy"] * T2["ijxb"] * H2["yqsi"];
 temp["a3,j,a2,b,"] += 0.5 * alpha * L1_["x,a8,"] * T2["a9,j,x,b,"] * H2_sym["a8,a3,a2,a9,"];//aaaa
 temp["a3,j,v2,b,"] += 0.5 * alpha * L1_["x,a8,"] * T2["a9,j,x,b,"] * H2_sym["a3,a8,a9,v2,"];//aaav****
