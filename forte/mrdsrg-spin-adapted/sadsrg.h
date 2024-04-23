@@ -396,7 +396,7 @@ class SADSRG : public DynamicCorrelationSolver {
     void H2_T2_C2(BlockedTensor& H2, BlockedTensor& T2, BlockedTensor& S2, const double& alpha,
                   BlockedTensor& C2);
     // the same function of H2_T2_C2 using symmetry
-    void H2_T2_C2_sym(BlockedTensor& H2,BlockedTensor& H2_sym,BlockedTensor& T2, BlockedTensor& S2, const double& alpha,
+    void H2_T2_C2_sym(BlockedTensor& H2_sym,BlockedTensor& T2, BlockedTensor& S2, const double& alpha,
                       BlockedTensor& C2);
     /// Compute zero-body term of commutator [V, T1], V is constructed from B (DF/CD)
     void V_T1_C0_DF(BlockedTensor& B, BlockedTensor& T1, const double& alpha, double& C0);

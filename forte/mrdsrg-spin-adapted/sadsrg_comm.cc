@@ -502,7 +502,7 @@ void SADSRG::H2_T2_C2(BlockedTensor& H2, BlockedTensor& T2, BlockedTensor& S2, c
     }
     dsrg_time_.add("222", timer.get());
 }
-void SADSRG::H2_T2_C2_sym(BlockedTensor& H2,BlockedTensor& H2_sym, BlockedTensor& T2, BlockedTensor& S2, const double& alpha,
+void SADSRG::H2_T2_C2_sym(BlockedTensor& H2_sym, BlockedTensor& T2, BlockedTensor& S2, const double& alpha,
                       BlockedTensor& C2) {
     local_timer timer;
    // particle-particle contractions
@@ -745,7 +745,6 @@ temp["v3,j,a2,b,"] -= 0.5 * alpha * L1_["a7,y,"] * T2["y,j,v5,b,"] * H2_sym["v5,
 temp["v3,j,v2,b,"] -= 0.5 * alpha * L1_["a7,y,"] * T2["y,j,v5,b,"] * H2_sym["v3,v5,a7,v2,"];//vvav****
 temp["v3,j,c2,b,"] -= 0.5 * alpha * L1_["a7,y,"] * T2["y,j,v5,b,"] * H2_sym["v5,v3,c2,a7,"];//vvca
     // temp["qjsb"] -= 0.5 * alpha * L1_["xy"] * S2["ijxb"] * H2["yqis"];
-    std::cout<<"changing code";
 temp["a3,j,a2,b,"] -= 0.5 * alpha * L1_["x,a8,"] * S2["a9,j,x,b,"] * H2_sym["a8,a3,a9,a2,"];//aaaa
 temp["a3,j,v2,b,"] -= 0.5 * alpha * L1_["x,a8,"] * S2["a9,j,x,b,"] * H2_sym["a8,a3,a9,v2,"];//aaav
 temp["a3,j,a2,b,"] -= 0.5 * alpha * L1_["x,a8,"] * S2["c9,j,x,b,"] * H2_sym["a8,a3,c9,a2,"];//aaca
