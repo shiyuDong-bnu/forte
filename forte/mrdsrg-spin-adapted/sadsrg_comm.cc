@@ -545,7 +545,6 @@ void SADSRG::H2_T2_C2_sym(BlockedTensor& H2,BlockedTensor& H2_sym, BlockedTensor
             blocks.push_back(block);
     }
     // A13
-    H2_sym["pqrs"]=H2["pqrs"];
     temp = ambit::BlockedTensor::build(tensor_type_, "temp", blocks);
     temp["jqsb"] -= alpha * H2["aqsm"] * T2["mjba"];
     temp["jqsb"] -= 0.5 * alpha * L1_["xy"] * T2["yjba"] * H2["aqsx"];

@@ -200,6 +200,7 @@ void SA_MRDSRG::compute_hbar() {
     } else {
         Hbar2_["pqrs"] = V_["pqrs"];
         O2_["pqrs"] = Hbar2_["pqrs"];
+        O2_sym["pqrs"] = Hbar2_["pqrs"];
     }
 
     // temporary Hamiltonian used in every iteration
@@ -278,6 +279,7 @@ void SA_MRDSRG::compute_hbar() {
         // copy C to O for next level commutator
         O1_["pq"] = C1_["pq"];
         O2_["pqrs"] = C2_["pqrs"];
+        O2_sym["pqrs"] = C2_["pqrs"];
 
         // test convergence of C
         double norm_C1 = C1_.norm();
