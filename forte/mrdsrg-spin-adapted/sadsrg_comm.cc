@@ -461,8 +461,25 @@ void SADSRG::H2_T2_C1_sym(BlockedTensor& H2, BlockedTensor& H2_sym,BlockedTensor
     C1["qs"] -= 0.5 * alpha * H2["eqsx"] * T2["uvey"] * L2_["xyuv"];
 
     C1["qs"] -= alpha * H2["uqms"] * T2["mvxy"] * L2_["xyuv"];
-    C1["qs"] += 0.5 * alpha * H2["uqsm"] * T2["mvxy"] * L2_["xyuv"];
-
+    // C1["qs"] += 0.5 * alpha * H2["uqsm"] * T2["mvxy"] * L2_["xyuv"];
+C1["a2,a3,"] += 0.5 * alpha * H2_sym["a4,a2,a3,c6,"] * T2["c6,v,x,y,"] * L2_["x,y,a4,v,"];//aaca****
+C1["a2,c3,"] += 0.5 * alpha * H2_sym["a4,a2,c3,c6,"] * T2["c6,v,x,y,"] * L2_["x,y,a4,v,"];//aacc
+C1["a2,v3,"] += 0.5 * alpha * H2_sym["a4,a2,v3,c6,"] * T2["c6,v,x,y,"] * L2_["x,y,a4,v,"];//aacv****
+C1["v2,a3,"] += 0.5 * alpha * H2_sym["a4,v2,a3,c6,"] * T2["c6,v,x,y,"] * L2_["x,y,a4,v,"];//avac
+C1["a2,a3,"] += 0.5 * alpha * H2_sym["v4,a2,a3,c6,"] * T2["c6,v,x,y,"] * L2_["x,y,v4,v,"];//avca****
+C1["v2,c3,"] += 0.5 * alpha * H2_sym["a4,v2,c3,c6,"] * T2["c6,v,x,y,"] * L2_["x,y,a4,v,"];//avcc
+C1["a2,c3,"] += 0.5 * alpha * H2_sym["v4,a2,c3,c6,"] * T2["c6,v,x,y,"] * L2_["x,y,v4,v,"];//avcc****
+C1["a2,v3,"] += 0.5 * alpha * H2_sym["v4,a2,v3,c6,"] * T2["c6,v,x,y,"] * L2_["x,y,v4,v,"];//avcv****
+C1["v2,v3,"] += 0.5 * alpha * H2_sym["a4,v2,v3,c6,"] * T2["c6,v,x,y,"] * L2_["x,y,a4,v,"];//avvc
+C1["c2,a3,"] += 0.5 * alpha * H2_sym["a4,c2,a3,c6,"] * T2["c6,v,x,y,"] * L2_["x,y,a4,v,"];//caca****
+C1["c2,c3,"] += 0.5 * alpha * H2_sym["a4,c2,c3,c6,"] * T2["c6,v,x,y,"] * L2_["x,y,a4,v,"];//cacc****
+C1["c2,v3,"] += 0.5 * alpha * H2_sym["a4,c2,v3,c6,"] * T2["c6,v,x,y,"] * L2_["x,y,a4,v,"];//cacv****
+C1["c2,a3,"] += 0.5 * alpha * H2_sym["v4,c2,a3,c6,"] * T2["c6,v,x,y,"] * L2_["x,y,v4,v,"];//cvca****
+C1["c2,c3,"] += 0.5 * alpha * H2_sym["v4,c2,c3,c6,"] * T2["c6,v,x,y,"] * L2_["x,y,v4,v,"];//cvcc****
+C1["c2,v3,"] += 0.5 * alpha * H2_sym["v4,c2,v3,c6,"] * T2["c6,v,x,y,"] * L2_["x,y,v4,v,"];//cvcv****
+C1["v2,a3,"] += 0.5 * alpha * H2_sym["v4,v2,a3,c6,"] * T2["c6,v,x,y,"] * L2_["x,y,v4,v,"];//vvca****
+C1["v2,c3,"] += 0.5 * alpha * H2_sym["v4,v2,c3,c6,"] * T2["c6,v,x,y,"] * L2_["x,y,v4,v,"];//vvcc
+C1["v2,v3,"] += 0.5 * alpha * H2_sym["v4,v2,v3,c6,"] * T2["c6,v,x,y,"] * L2_["x,y,v4,v,"];//vvcv****
     if (print_ > 3) {
         outfile->Printf("\n    Time for [H2, T2] -> C1 : %12.3f", timer.get());
     }
