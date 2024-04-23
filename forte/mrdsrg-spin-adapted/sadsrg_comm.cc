@@ -439,7 +439,7 @@ void SADSRG::H2_T1_C2(BlockedTensor& H2, BlockedTensor& T1, const double& alpha,
     }
     dsrg_time_.add("212", timer.get());
 }
-void SADSRG::H2_T1_C2_sym(BlockedTensor& H2, BlockedTensor& H2_sym,BlockedTensor& T1, const double& alpha,
+void SADSRG::H2_T1_C2_sym(BlockedTensor& H2_sym,BlockedTensor& T1, const double& alpha,
                       BlockedTensor& C2) {
     local_timer timer;
 

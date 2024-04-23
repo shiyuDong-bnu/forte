@@ -254,7 +254,7 @@ void SA_MRDSRG::compute_hbar() {
             V_T2_C2_DF(B_, T2_, DT2_, factor, C2_);
         } else {
             // H2_T1_C2(O2_, T1_, factor, C2_);
-            H2_T1_C2_sym(O2_,O2_sym, T1_, factor, C2_);
+            H2_T1_C2_sym(O2_sym, T1_, factor, C2_);
             // H2_T2_C2(O2_, T2_, DT2_, factor, C2_);
             H2_T2_C2_sym(O2_sym, T2_, DT2_, factor, C2_);
         }
