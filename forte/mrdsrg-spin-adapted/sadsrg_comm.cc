@@ -533,7 +533,24 @@ void SADSRG::H2_T2_C2_sym(BlockedTensor& H2,BlockedTensor& H2_sym, BlockedTensor
     temp["qjsb"] -= 0.5 * alpha * L1_["xy"] * T2["yjab"] * H2["aqsx"];
     temp["qjsb"] -= 0.5 * alpha * L1_["xy"] * S2["ijxb"] * H2["yqis"];
     // temp["qjsb"] += 0.5 * alpha * L1_["xy"] * T2["ijxb"] * H2["yqsi"];
-
+temp["a3,j,a2,b,"] += 0.5 * alpha * L1_["x,a8,"] * T2["a9,j,x,b,"] * H2_sym["a8,a3,a2,a9,"];//aaaa
+temp["a3,j,v2,b,"] += 0.5 * alpha * L1_["x,a8,"] * T2["a9,j,x,b,"] * H2_sym["a3,a8,a9,v2,"];//aaav****
+temp["a3,j,c2,b,"] += 0.5 * alpha * L1_["x,a8,"] * T2["a9,j,x,b,"] * H2_sym["a8,a3,c2,a9,"];//aaca
+temp["a3,j,a2,b,"] += 0.5 * alpha * L1_["x,a8,"] * T2["c9,j,x,b,"] * H2_sym["a3,a8,c9,a2,"];//aaca****
+temp["a3,j,c2,b,"] += 0.5 * alpha * L1_["x,a8,"] * T2["c9,j,x,b,"] * H2_sym["a8,a3,c2,c9,"];//aacc
+temp["a3,j,v2,b,"] += 0.5 * alpha * L1_["x,a8,"] * T2["c9,j,x,b,"] * H2_sym["a3,a8,c9,v2,"];//aacv****
+temp["v3,j,a2,b,"] += 0.5 * alpha * L1_["x,a8,"] * T2["a9,j,x,b,"] * H2_sym["a8,v3,a2,a9,"];//avaa
+temp["v3,j,a2,b,"] += 0.5 * alpha * L1_["x,a8,"] * T2["c9,j,x,b,"] * H2_sym["a8,v3,a2,c9,"];//avac
+temp["v3,j,c2,b,"] += 0.5 * alpha * L1_["x,a8,"] * T2["a9,j,x,b,"] * H2_sym["a8,v3,c2,a9,"];//avca
+temp["v3,j,c2,b,"] += 0.5 * alpha * L1_["x,a8,"] * T2["c9,j,x,b,"] * H2_sym["a8,v3,c2,c9,"];//avcc
+temp["v3,j,v2,b,"] += 0.5 * alpha * L1_["x,a8,"] * T2["a9,j,x,b,"] * H2_sym["a8,v3,v2,a9,"];//avva
+temp["v3,j,v2,b,"] += 0.5 * alpha * L1_["x,a8,"] * T2["c9,j,x,b,"] * H2_sym["a8,v3,v2,c9,"];//avvc
+temp["c3,j,a2,b,"] += 0.5 * alpha * L1_["x,a8,"] * T2["a9,j,x,b,"] * H2_sym["c3,a8,a9,a2,"];//caaa****
+temp["c3,j,c2,b,"] += 0.5 * alpha * L1_["x,a8,"] * T2["a9,j,x,b,"] * H2_sym["c3,a8,a9,c2,"];//caac****
+temp["c3,j,v2,b,"] += 0.5 * alpha * L1_["x,a8,"] * T2["a9,j,x,b,"] * H2_sym["c3,a8,a9,v2,"];//caav****
+temp["c3,j,a2,b,"] += 0.5 * alpha * L1_["x,a8,"] * T2["c9,j,x,b,"] * H2_sym["c3,a8,c9,a2,"];//caca****
+temp["c3,j,c2,b,"] += 0.5 * alpha * L1_["x,a8,"] * T2["c9,j,x,b,"] * H2_sym["c3,a8,c9,c2,"];//cacc****
+temp["c3,j,v2,b,"] += 0.5 * alpha * L1_["x,a8,"] * T2["c9,j,x,b,"] * H2_sym["c3,a8,c9,v2,"];//cacv****
     C2["qjsb"] += temp["qjsb"];
     C2["jqbs"] += temp["qjsb"];
 
