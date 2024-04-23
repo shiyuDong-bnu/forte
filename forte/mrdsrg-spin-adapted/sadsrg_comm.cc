@@ -509,10 +509,28 @@ void SADSRG::H2_T2_C2_sym(BlockedTensor& H2,BlockedTensor& H2_sym, BlockedTensor
     C2["ijrs"] += alpha * H2["abrs"] * T2["ijab"];
 
     C2["ijrs"] -= 0.5 * alpha * L1_["xy"] * T2["ijxb"] * H2["ybrs"];
-    C2["jisr"] -= 0.5 * alpha * L1_["xy"] * T2["ijxb"] * H2["ybrs"];
-
+    // C2["jisr"] -= 0.5 * alpha * L1_["xy"] * T2["ijxb"] * H2["ybrs"];
+C2["j,i,a3,a2,"] -= 0.5 * alpha * L1_["x,a8,"] * T2["i,j,x,a4,"] * H2_sym["a8,a4,a2,a3,"];//aaaa
+C2["j,i,v3,a2,"] -= 0.5 * alpha * L1_["x,a8,"] * T2["i,j,x,a4,"] * H2_sym["a8,a4,a2,v3,"];//aaav
+C2["j,i,a3,v2,"] -= 0.5 * alpha * L1_["x,a8,"] * T2["i,j,x,a4,"] * H2_sym["a4,a8,a3,v2,"];//aaav****
+C2["j,i,a3,c2,"] -= 0.5 * alpha * L1_["x,a8,"] * T2["i,j,x,a4,"] * H2_sym["a8,a4,c2,a3,"];//aaca
+C2["j,i,c3,a2,"] -= 0.5 * alpha * L1_["x,a8,"] * T2["i,j,x,a4,"] * H2_sym["a4,a8,c3,a2,"];//aaca****
+C2["j,i,c3,c2,"] -= 0.5 * alpha * L1_["x,a8,"] * T2["i,j,x,a4,"] * H2_sym["a8,a4,c2,c3,"];//aacc
+C2["j,i,v3,c2,"] -= 0.5 * alpha * L1_["x,a8,"] * T2["i,j,x,a4,"] * H2_sym["a8,a4,c2,v3,"];//aacv
+C2["j,i,c3,v2,"] -= 0.5 * alpha * L1_["x,a8,"] * T2["i,j,x,a4,"] * H2_sym["a4,a8,c3,v2,"];//aacv****
+C2["j,i,v3,v2,"] -= 0.5 * alpha * L1_["x,a8,"] * T2["i,j,x,a4,"] * H2_sym["a8,a4,v2,v3,"];//aavv
+C2["j,i,a3,a2,"] -= 0.5 * alpha * L1_["x,a8,"] * T2["i,j,x,v4,"] * H2_sym["a8,v4,a2,a3,"];//avaa
+C2["j,i,c3,a2,"] -= 0.5 * alpha * L1_["x,a8,"] * T2["i,j,x,v4,"] * H2_sym["a8,v4,a2,c3,"];//avac
+C2["j,i,v3,a2,"] -= 0.5 * alpha * L1_["x,a8,"] * T2["i,j,x,v4,"] * H2_sym["a8,v4,a2,v3,"];//avav
+C2["j,i,a3,c2,"] -= 0.5 * alpha * L1_["x,a8,"] * T2["i,j,x,v4,"] * H2_sym["a8,v4,c2,a3,"];//avca
+C2["j,i,c3,c2,"] -= 0.5 * alpha * L1_["x,a8,"] * T2["i,j,x,v4,"] * H2_sym["a8,v4,c2,c3,"];//avcc
+C2["j,i,v3,c2,"] -= 0.5 * alpha * L1_["x,a8,"] * T2["i,j,x,v4,"] * H2_sym["a8,v4,c2,v3,"];//avcv
+C2["j,i,a3,v2,"] -= 0.5 * alpha * L1_["x,a8,"] * T2["i,j,x,v4,"] * H2_sym["a8,v4,v2,a3,"];//avva
+C2["j,i,c3,v2,"] -= 0.5 * alpha * L1_["x,a8,"] * T2["i,j,x,v4,"] * H2_sym["a8,v4,v2,c3,"];//avvc
+C2["j,i,v3,v2,"] -= 0.5 * alpha * L1_["x,a8,"] * T2["i,j,x,v4,"] * H2_sym["a8,v4,v2,v3,"];//avvv
     // hole-hole contractions
     // C2["pqab"] += alpha * H2["pqij"] * T2["ijab"];
+
 C2["a3,a2,a,b,"] += alpha * H2_sym["a3,a2,a9,a1,"] * T2["a9,a1,a,b,"];//aaaa
 C2["a3,a2,a,b,"] += alpha * H2_sym["a3,a2,c9,a1,"] * T2["c9,a1,a,b,"];//aaca
 C2["a3,a2,a,b,"] += alpha * H2_sym["a2,a3,c1,a9,"] * T2["a9,c1,a,b,"];//aaca****
