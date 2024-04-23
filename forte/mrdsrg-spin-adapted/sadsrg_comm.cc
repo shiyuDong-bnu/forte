@@ -506,8 +506,43 @@ void SADSRG::H2_T2_C2_sym(BlockedTensor& H2,BlockedTensor& H2_sym, BlockedTensor
                       BlockedTensor& C2) {
     local_timer timer;
    // particle-particle contractions
-    C2["ijrs"] += alpha * H2["abrs"] * T2["ijab"];
-
+    // C2["ijrs"] += alpha * H2["abrs"] * T2["ijab"];
+C2["i,j,a2,a3,"] += alpha * H2_sym["a5,a4,a2,a3,"] * T2["i,j,a5,a4,"];//aaaa
+C2["i,j,a2,v3,"] += alpha * H2_sym["a5,a4,a2,v3,"] * T2["i,j,a5,a4,"];//aaav
+C2["i,j,v2,a3,"] += alpha * H2_sym["a4,a5,a3,v2,"] * T2["i,j,a5,a4,"];//aaav****
+C2["i,j,c2,a3,"] += alpha * H2_sym["a5,a4,c2,a3,"] * T2["i,j,a5,a4,"];//aaca
+C2["i,j,a2,c3,"] += alpha * H2_sym["a4,a5,c3,a2,"] * T2["i,j,a5,a4,"];//aaca****
+C2["i,j,c2,c3,"] += alpha * H2_sym["a5,a4,c2,c3,"] * T2["i,j,a5,a4,"];//aacc
+C2["i,j,c2,v3,"] += alpha * H2_sym["a5,a4,c2,v3,"] * T2["i,j,a5,a4,"];//aacv
+C2["i,j,v2,c3,"] += alpha * H2_sym["a4,a5,c3,v2,"] * T2["i,j,a5,a4,"];//aacv****
+C2["i,j,v2,v3,"] += alpha * H2_sym["a5,a4,v2,v3,"] * T2["i,j,a5,a4,"];//aavv
+C2["i,j,a2,a3,"] += alpha * H2_sym["a5,v4,a2,a3,"] * T2["i,j,a5,v4,"];//avaa
+C2["i,j,a2,a3,"] += alpha * H2_sym["a4,v5,a3,a2,"] * T2["i,j,v5,a4,"];//avaa****
+C2["i,j,a2,c3,"] += alpha * H2_sym["a5,v4,a2,c3,"] * T2["i,j,a5,v4,"];//avac
+C2["i,j,c2,a3,"] += alpha * H2_sym["a4,v5,a3,c2,"] * T2["i,j,v5,a4,"];//avac****
+C2["i,j,a2,v3,"] += alpha * H2_sym["a5,v4,a2,v3,"] * T2["i,j,a5,v4,"];//avav
+C2["i,j,v2,a3,"] += alpha * H2_sym["a4,v5,a3,v2,"] * T2["i,j,v5,a4,"];//avav****
+C2["i,j,c2,a3,"] += alpha * H2_sym["a5,v4,c2,a3,"] * T2["i,j,a5,v4,"];//avca
+C2["i,j,a2,c3,"] += alpha * H2_sym["a4,v5,c3,a2,"] * T2["i,j,v5,a4,"];//avca****
+C2["i,j,c2,c3,"] += alpha * H2_sym["a5,v4,c2,c3,"] * T2["i,j,a5,v4,"];//avcc
+C2["i,j,c2,c3,"] += alpha * H2_sym["a4,v5,c3,c2,"] * T2["i,j,v5,a4,"];//avcc****
+C2["i,j,c2,v3,"] += alpha * H2_sym["a5,v4,c2,v3,"] * T2["i,j,a5,v4,"];//avcv
+C2["i,j,v2,c3,"] += alpha * H2_sym["a4,v5,c3,v2,"] * T2["i,j,v5,a4,"];//avcv****
+C2["i,j,v2,a3,"] += alpha * H2_sym["a5,v4,v2,a3,"] * T2["i,j,a5,v4,"];//avva
+C2["i,j,a2,v3,"] += alpha * H2_sym["a4,v5,v3,a2,"] * T2["i,j,v5,a4,"];//avva****
+C2["i,j,v2,c3,"] += alpha * H2_sym["a5,v4,v2,c3,"] * T2["i,j,a5,v4,"];//avvc
+C2["i,j,c2,v3,"] += alpha * H2_sym["a4,v5,v3,c2,"] * T2["i,j,v5,a4,"];//avvc****
+C2["i,j,v2,v3,"] += alpha * H2_sym["a5,v4,v2,v3,"] * T2["i,j,a5,v4,"];//avvv
+C2["i,j,v2,v3,"] += alpha * H2_sym["a4,v5,v3,v2,"] * T2["i,j,v5,a4,"];//avvv****
+C2["i,j,a2,a3,"] += alpha * H2_sym["v5,v4,a2,a3,"] * T2["i,j,v5,v4,"];//vvaa
+C2["i,j,a2,v3,"] += alpha * H2_sym["v5,v4,a2,v3,"] * T2["i,j,v5,v4,"];//vvav
+C2["i,j,v2,a3,"] += alpha * H2_sym["v4,v5,a3,v2,"] * T2["i,j,v5,v4,"];//vvav****
+C2["i,j,c2,a3,"] += alpha * H2_sym["v5,v4,c2,a3,"] * T2["i,j,v5,v4,"];//vvca
+C2["i,j,a2,c3,"] += alpha * H2_sym["v4,v5,c3,a2,"] * T2["i,j,v5,v4,"];//vvca****
+C2["i,j,c2,c3,"] += alpha * H2_sym["v5,v4,c2,c3,"] * T2["i,j,v5,v4,"];//vvcc
+C2["i,j,c2,v3,"] += alpha * H2_sym["v5,v4,c2,v3,"] * T2["i,j,v5,v4,"];//vvcv
+C2["i,j,v2,c3,"] += alpha * H2_sym["v4,v5,c3,v2,"] * T2["i,j,v5,v4,"];//vvcv****
+C2["i,j,v2,v3,"] += alpha * H2_sym["v5,v4,v2,v3,"] * T2["i,j,v5,v4,"];//vvvv
     // C2["ijrs"] -= 0.5 * alpha * L1_["xy"] * T2["ijxb"] * H2["ybrs"];
 C2["i,j,a2,a3,"] -= 0.5 * alpha * L1_["x,a8,"] * T2["i,j,x,a4,"] * H2_sym["a8,a4,a2,a3,"];//aaaa
 C2["i,j,a2,v3,"] -= 0.5 * alpha * L1_["x,a8,"] * T2["i,j,x,a4,"] * H2_sym["a8,a4,a2,v3,"];//aaav
