@@ -444,7 +444,6 @@ void SADSRG::H2_T1_C2_sym(BlockedTensor& H2_sym,BlockedTensor& T1, const double&
     local_timer timer;
 
     // C2["irpq"] += alpha * T1["ia"] * H2["arpq"];
-std::cout<<"testing funciton";
 C2["i,a2,a7,a8,"] += alpha * T1["i,a5,"] * H2_sym["a5,a2,a7,a8,"];//aaaa
 C2["i,a2,a7,v8,"] += alpha * T1["i,a5,"] * H2_sym["a5,a2,a7,v8,"];//aaav
 C2["i,a2,v7,a8,"] += alpha * T1["i,a5,"] * H2_sym["a2,a5,a8,v7,"];//aaav****
