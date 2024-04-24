@@ -408,10 +408,9 @@ void SADSRG::H2_T2_C1(BlockedTensor& H2, BlockedTensor& T2, BlockedTensor& S2, c
     dsrg_time_.add("221", timer.get());
 }
 
-void SADSRG::H2_T2_C1_sym(BlockedTensor& H2, BlockedTensor& H2_sym,BlockedTensor& T2, BlockedTensor& S2, const double& alpha,
+void SADSRG::H2_T2_C1_sym( BlockedTensor& H2_sym,BlockedTensor& T2, BlockedTensor& S2, const double& alpha,
                   BlockedTensor& C1){
     local_timer timer;
-    std::cout<<"Testing function";
     // [Hbar2, T2] (C_2)^3 -> C1 particle contractions
     // C1["ir"] += alpha * H2["abrm"] * S2["imab"];
  C1["i,a2,"] += alpha * H2_sym["a5,a4,c6,a2,"] * S2["i,c6,a4,a5,"];//aaca****
