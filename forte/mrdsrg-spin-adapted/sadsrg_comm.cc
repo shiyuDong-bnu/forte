@@ -448,10 +448,27 @@ void SADSRG::H2_T2_C1_sym(BlockedTensor& H2, BlockedTensor& H2_sym,BlockedTensor
     // [Hbar2, T2] C_4 C_2 2:2 -> C1 pa
     C1["pa"] -= 0.5 * alpha * L2_["xyuv"] * T2["uvab"] * H2["pbxy"];
 
-    C1["pa"] -= 0.5 * alpha * H2["puix"] * S2["ivay"] * L2_["xyuv"];
-    C1["pa"] += 0.5 * alpha * H2["puxi"] * T2["ivay"] * L2_["xyuv"];
-    C1["pa"] += 0.5 * alpha * H2["puxi"] * T2["viay"] * L2_["xyvu"];
-
+    // C1["pa"] -= 0.5 * alpha * H2["puix"] * S2["ivay"] * L2_["xyuv"];
+C1["a2,a,"] -= 0.5 * alpha * H2_sym["a2,a9,a1,a7,"] * S2["a1,v,a,y,"] * L2_["a7,y,a9,v,"];//aaaa
+C1["a2,a,"] -= 0.5 * alpha * H2_sym["a2,a9,c1,a7,"] * S2["c1,v,a,y,"] * L2_["a7,y,a9,v,"];//aaca
+C1["v2,a,"] -= 0.5 * alpha * H2_sym["a9,v2,a7,a1,"] * S2["a1,v,a,y,"] * L2_["a7,y,a9,v,"];//avaa****
+C1["v2,a,"] -= 0.5 * alpha * H2_sym["a9,v2,a7,c1,"] * S2["c1,v,a,y,"] * L2_["a7,y,a9,v,"];//avac****
+C1["c2,a,"] -= 0.5 * alpha * H2_sym["c2,a9,a1,a7,"] * S2["a1,v,a,y,"] * L2_["a7,y,a9,v,"];//caaa
+C1["c2,a,"] -= 0.5 * alpha * H2_sym["c2,a9,c1,a7,"] * S2["c1,v,a,y,"] * L2_["a7,y,a9,v,"];//caca
+    // C1["pa"] += 0.5 * alpha * H2["puxi"] * T2["ivay"] * L2_["xyuv"];
+C1["a2,a,"] += 0.5 * alpha * H2_sym["a2,a9,a7,a1,"] * T2["a1,v,a,y,"] * L2_["a7,y,a9,v,"];//aaaa
+C1["a2,a,"] += 0.5 * alpha * H2_sym["a9,a2,c1,a7,"] * T2["c1,v,a,y,"] * L2_["a7,y,a9,v,"];//aaca****
+C1["v2,a,"] += 0.5 * alpha * H2_sym["a9,v2,a1,a7,"] * T2["a1,v,a,y,"] * L2_["a7,y,a9,v,"];//avaa****
+C1["v2,a,"] += 0.5 * alpha * H2_sym["a9,v2,c1,a7,"] * T2["c1,v,a,y,"] * L2_["a7,y,a9,v,"];//avca****
+C1["c2,a,"] += 0.5 * alpha * H2_sym["c2,a9,a7,a1,"] * T2["a1,v,a,y,"] * L2_["a7,y,a9,v,"];//caaa
+C1["c2,a,"] += 0.5 * alpha * H2_sym["c2,a9,a7,c1,"] * T2["c1,v,a,y,"] * L2_["a7,y,a9,v,"];//caac
+    // C1["pa"] += 0.5 * alpha * H2["puxi"] * T2["viay"] * L2_["xyvu"];
+C1["a2,a,"] += 0.5 * alpha * H2_sym["a2,a9,a7,a1,"] * T2["v,a1,a,y,"] * L2_["a7,y,v,a9,"];//aaaa
+C1["a2,a,"] += 0.5 * alpha * H2_sym["a9,a2,c1,a7,"] * T2["v,c1,a,y,"] * L2_["a7,y,v,a9,"];//aaca****
+C1["v2,a,"] += 0.5 * alpha * H2_sym["a9,v2,a1,a7,"] * T2["v,a1,a,y,"] * L2_["a7,y,v,a9,"];//avaa****
+C1["v2,a,"] += 0.5 * alpha * H2_sym["a9,v2,c1,a7,"] * T2["v,c1,a,y,"] * L2_["a7,y,v,a9,"];//avca****
+C1["c2,a,"] += 0.5 * alpha * H2_sym["c2,a9,a7,a1,"] * T2["v,a1,a,y,"] * L2_["a7,y,v,a9,"];//caaa
+C1["c2,a,"] += 0.5 * alpha * H2_sym["c2,a9,a7,c1,"] * T2["v,c1,a,y,"] * L2_["a7,y,v,a9,"];//caac
     // [Hbar2, T2] C_4 C_2 1:3 -> C1
     // C1["jb"] += 0.5 * alpha * H2["avxy"] * S2["ujab"] * L2_["xyuv"];
 C1["j,b,"] += 0.5 * alpha * H2_sym["a4,a9,a7,a8,"] * S2["u,j,a4,b,"] * L2_["a7,a8,u,a9,"];//aaaa
