@@ -354,8 +354,26 @@ void SADSRG::H2_T1_C1_sym(BlockedTensor& H2, BlockedTensor& H2_sym,BlockedTensor
     C1["qp"] += 2.0 * alpha * T1["ma"] * H2["qapm"];
     C1["qp"] -= alpha * T1["ma"] * H2["aqpm"];
 
-    C1["qp"] += alpha * T1["xe"] * L1_["yx"] * H2["qepy"];
-    C1["qp"] -= 0.5 * alpha * T1["xe"] * L1_["yx"] * H2["eqpy"];
+    // C1["qp"] += alpha * T1["xe"] * L1_["yx"] * H2["qepy"];
+C1["a3,a2,"] += alpha * T1["x,v7,"] * L1_["a9,x,"] * H2_sym["a3,v7,a2,a9,"];//avaa
+C1["a3,c2,"] += alpha * T1["x,v7,"] * L1_["a9,x,"] * H2_sym["a3,v7,c2,a9,"];//avca
+C1["a3,v2,"] += alpha * T1["x,v7,"] * L1_["a9,x,"] * H2_sym["a3,v7,v2,a9,"];//avva
+C1["c3,a2,"] += alpha * T1["x,v7,"] * L1_["a9,x,"] * H2_sym["c3,v7,a2,a9,"];//cvaa
+C1["c3,c2,"] += alpha * T1["x,v7,"] * L1_["a9,x,"] * H2_sym["c3,v7,c2,a9,"];//cvca
+C1["c3,v2,"] += alpha * T1["x,v7,"] * L1_["a9,x,"] * H2_sym["c3,v7,v2,a9,"];//cvva
+C1["v3,a2,"] += alpha * T1["x,v7,"] * L1_["a9,x,"] * H2_sym["v3,v7,a2,a9,"];//vvaa
+C1["v3,v2,"] += alpha * T1["x,v7,"] * L1_["a9,x,"] * H2_sym["v7,v3,a9,v2,"];//vvav****
+C1["v3,c2,"] += alpha * T1["x,v7,"] * L1_["a9,x,"] * H2_sym["v3,v7,c2,a9,"];//vvca
+    // C1["qp"] -= 0.5 * alpha * T1["xe"] * L1_["yx"] * H2["eqpy"];
+C1["a3,a2,"] -= 0.5 * alpha * T1["x,v7,"] * L1_["a9,x,"] * H2_sym["a3,v7,a9,a2,"];//avaa****
+C1["a3,c2,"] -= 0.5 * alpha * T1["x,v7,"] * L1_["a9,x,"] * H2_sym["a3,v7,a9,c2,"];//avac****
+C1["a3,v2,"] -= 0.5 * alpha * T1["x,v7,"] * L1_["a9,x,"] * H2_sym["a3,v7,a9,v2,"];//avav****
+C1["c3,a2,"] -= 0.5 * alpha * T1["x,v7,"] * L1_["a9,x,"] * H2_sym["c3,v7,a9,a2,"];//cvaa****
+C1["c3,c2,"] -= 0.5 * alpha * T1["x,v7,"] * L1_["a9,x,"] * H2_sym["c3,v7,a9,c2,"];//cvac****
+C1["c3,v2,"] -= 0.5 * alpha * T1["x,v7,"] * L1_["a9,x,"] * H2_sym["c3,v7,a9,v2,"];//cvav****
+C1["v3,a2,"] -= 0.5 * alpha * T1["x,v7,"] * L1_["a9,x,"] * H2_sym["v7,v3,a2,a9,"];//vvaa
+C1["v3,v2,"] -= 0.5 * alpha * T1["x,v7,"] * L1_["a9,x,"] * H2_sym["v3,v7,a9,v2,"];//vvav****
+C1["v3,c2,"] -= 0.5 * alpha * T1["x,v7,"] * L1_["a9,x,"] * H2_sym["v7,v3,c2,a9,"];//vvca
 
     // C1["qp"] -= alpha * T1["mu"] * L1_["uv"] * H2["qvpm"];
 C1["a3,a2,"] -= alpha * T1["c6,u,"] * L1_["u,a8,"] * H2_sym["a8,a3,c6,a2,"];//aaca****
