@@ -142,7 +142,6 @@ std::vector<double> SADSRG::H2_T2_C0_sym(BlockedTensor& H2, BlockedTensor& H2_sy
 
     std::vector<double> Eout{0.0, 0.0, 0.0};
     double E = 0.0;
-    std::cout<<"Testing function";
 
     // [H2, T2] (C_2)^4 from ccvv
     // E += H2["efmn"] * S2["mnef"];
@@ -346,7 +345,7 @@ std::vector<double> SADSRG::H2_T2_C0_T2small_sym(BlockedTensor& H2,BlockedTensor
      */
 
     double E1 = 0.0, E2 = 0.0, E3 = 0.0;
-
+    std::cout<<"Testing function";
     // [H2, T2] L1 from aavv
     // E1 += 0.25 * H2["efxu"] * S2["yvef"] * L1_["uv"] * L1_["xy"];
     E1 += 0.25 * H2_sym["v7,v8,a9,a6,"] * S2["y,v,v7,v8,"] * L1_["a6,v,"] * L1_["a9,y,"];//vvaa
@@ -366,8 +365,10 @@ std::vector<double> SADSRG::H2_T2_C0_T2small_sym(BlockedTensor& H2,BlockedTensor
     // [H2, T2] L1 from caaa and aaav
     temp.zero();
     temp.set_name("temp_aaav_caaa");
-    temp["uxyv"] += 0.25 * H2["evwx"] * S2["zyeu"] * L1_["wz"];
-    temp["uxyv"] += 0.25 * H2["vzmx"] * S2["myuw"] * Eta1_["wz"];
+    // temp["uxyv"] += 0.25 * H2["evwx"] * S2["zyeu"] * L1_["wz"];
+    temp["u,a7,y,a6,"] += 0.25 * H2_sym["a6,v9,a7,a8,"] * S2["z,y,v9,u,"] * L1_["a8,z,"];//avaa****
+    // temp["uxyv"] += 0.25 * H2["vzmx"] * S2["myuw"] * Eta1_["wz"];
+    temp["u,a7,y,a6,"] += 0.25 * H2_sym["a6,a8,c9,a7,"] * S2["c9,y,u,w,"] * Eta1_["w,a8,"];//aaca
     E1 += temp["uxyv"] * Eta1_["uv"] * L1_["xy"];
 
     // <[Hbar2, T2]> C_4 (C_2)^2
