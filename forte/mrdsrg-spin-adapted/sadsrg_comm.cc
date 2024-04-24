@@ -347,6 +347,25 @@ void SADSRG::H2_T1_C1(BlockedTensor& H2, BlockedTensor& T1, const double& alpha,
     dsrg_time_.add("211", timer.get());
 }
 
+void SADSRG::H2_T1_C1_sym(BlockedTensor& H2, BlockedTensor& H2_sym,BlockedTensor& T1, const double& alpha,
+                      BlockedTensor& C1) {
+    local_timer timer;
+    std::cout<<"testing function"<<std::endl;
+    C1["qp"] += 2.0 * alpha * T1["ma"] * H2["qapm"];
+    C1["qp"] -= alpha * T1["ma"] * H2["aqpm"];
+
+    C1["qp"] += alpha * T1["xe"] * L1_["yx"] * H2["qepy"];
+    C1["qp"] -= 0.5 * alpha * T1["xe"] * L1_["yx"] * H2["eqpy"];
+
+    C1["qp"] -= alpha * T1["mu"] * L1_["uv"] * H2["qvpm"];
+    C1["qp"] += 0.5 * alpha * T1["mu"] * L1_["uv"] * H2["vqpm"];
+
+    if (print_ > 3) {
+        outfile->Printf("\n    Time for [H2, T1] -> C1 : %12.3f", timer.get());
+    }
+    dsrg_time_.add("211", timer.get());
+}
+
 void SADSRG::H2_T2_C1(BlockedTensor& H2, BlockedTensor& T2, BlockedTensor& S2, const double& alpha,
                       BlockedTensor& C1) {
     local_timer timer;
