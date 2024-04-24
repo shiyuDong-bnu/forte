@@ -136,6 +136,43 @@ std::vector<double> SADSRG::H2_T2_C0(BlockedTensor& H2, BlockedTensor& T2, Block
     dsrg_time_.add("220", timer.get());
     return Eout;
 }
+std::vector<double> SADSRG::H2_T2_C0_sym(BlockedTensor& H2, BlockedTensor& H2_sym,BlockedTensor& T2, BlockedTensor& S2,
+                                     const double& alpha, double& C0) {
+    local_timer timer;
+
+    std::vector<double> Eout{0.0, 0.0, 0.0};
+    double E = 0.0;
+
+    // [H2, T2] (C_2)^4 from ccvv
+    E += H2["efmn"] * S2["mnef"];
+
+    // [H2, T2] (C_2)^4 L1 from cavv
+    E += H2["efmu"] * S2["mvef"] * L1_["uv"];
+
+    // [H2, T2] (C_2)^4 L1 from ccav
+    E += H2["vemn"] * S2["mnue"] * Eta1_["uv"];
+
+    Eout[0] += E;
+
+    // other terms involving T2 with at least two active indices
+    auto Esmall = H2_T2_C0_T2small(H2, T2, S2);
+
+    for (int i = 0; i < 3; ++i) {
+        E += Esmall[i];
+        Eout[i] += Esmall[i];
+        Eout[i] *= alpha;
+    }
+
+    // multiply prefactor and copy to C0
+    E *= alpha;
+    C0 += E;
+
+    if (print_ > 3) {
+        outfile->Printf("\n    Time for [H2, T2] -> C0 : %12.3f", timer.get());
+    }
+    dsrg_time_.add("220", timer.get());
+    return Eout;
+}
 
 std::vector<double> SADSRG::H2_T2_C0_T2small(BlockedTensor& H2, BlockedTensor& T2,
                                              BlockedTensor& S2) {
