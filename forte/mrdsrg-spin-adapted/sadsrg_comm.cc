@@ -419,8 +419,20 @@ void SADSRG::H2_T2_C1_sym(BlockedTensor& H2, BlockedTensor& H2_sym,BlockedTensor
 
     C1["ir"] += 0.25 * alpha * S2["ijux"] * L1_["xy"] * L1_["uv"] * H2["vyrj"];
 
-    C1["ir"] -= 0.5 * alpha * L1_["uv"] * S2["imub"] * H2["vbrm"];
-    C1["ir"] -= 0.5 * alpha * L1_["uv"] * S2["miub"] * H2["bvrm"];
+    // C1["ir"] -= 0.5 * alpha * L1_["uv"] * S2["imub"] * H2["vbrm"];
+C1["i,a2,"] -= 0.5 * alpha * L1_["u,a8,"] * S2["i,c6,u,a5,"] * H2_sym["a5,a8,c6,a2,"];//aaca****
+C1["i,c2,"] -= 0.5 * alpha * L1_["u,a8,"] * S2["i,c6,u,a5,"] * H2_sym["a8,a5,c2,c6,"];//aacc
+C1["i,v2,"] -= 0.5 * alpha * L1_["u,a8,"] * S2["i,c6,u,a5,"] * H2_sym["a5,a8,c6,v2,"];//aacv****
+C1["i,a2,"] -= 0.5 * alpha * L1_["u,a8,"] * S2["i,c6,u,v5,"] * H2_sym["a8,v5,a2,c6,"];//avac
+C1["i,c2,"] -= 0.5 * alpha * L1_["u,a8,"] * S2["i,c6,u,v5,"] * H2_sym["a8,v5,c2,c6,"];//avcc
+C1["i,v2,"] -= 0.5 * alpha * L1_["u,a8,"] * S2["i,c6,u,v5,"] * H2_sym["a8,v5,v2,c6,"];//avvc
+    // C1["ir"] -= 0.5 * alpha * L1_["uv"] * S2["miub"] * H2["bvrm"];
+C1["i,a2,"] -= 0.5 * alpha * L1_["u,a8,"] * S2["c6,i,u,a5,"] * H2_sym["a8,a5,c6,a2,"];//aaca****
+C1["i,c2,"] -= 0.5 * alpha * L1_["u,a8,"] * S2["c6,i,u,a5,"] * H2_sym["a5,a8,c2,c6,"];//aacc
+C1["i,v2,"] -= 0.5 * alpha * L1_["u,a8,"] * S2["c6,i,u,a5,"] * H2_sym["a8,a5,c6,v2,"];//aacv****
+C1["i,a2,"] -= 0.5 * alpha * L1_["u,a8,"] * S2["c6,i,u,v5,"] * H2_sym["a8,v5,c6,a2,"];//avca****
+C1["i,c2,"] -= 0.5 * alpha * L1_["u,a8,"] * S2["c6,i,u,v5,"] * H2_sym["a8,v5,c6,c2,"];//avcc****
+C1["i,v2,"] -= 0.5 * alpha * L1_["u,a8,"] * S2["c6,i,u,v5,"] * H2_sym["a8,v5,c6,v2,"];//avcv****
 
     // C1["ir"] -= 0.25 * alpha * S2["iyub"] * L1_["uv"] * L1_["xy"] * H2["vbrx"];
 C1["i,a2,"] -= 0.25 * alpha * S2["i,y,u,a5,"] * L1_["u,a8,"] * L1_["a9,y,"] * H2_sym["a8,a5,a2,a9,"];//aaaa
