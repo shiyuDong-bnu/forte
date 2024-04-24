@@ -351,8 +351,44 @@ void SADSRG::H2_T1_C1_sym(BlockedTensor& H2, BlockedTensor& H2_sym,BlockedTensor
                       BlockedTensor& C1) {
     local_timer timer;
     std::cout<<"testing function"<<std::endl;
-    C1["qp"] += 2.0 * alpha * T1["ma"] * H2["qapm"];
-    C1["qp"] -= alpha * T1["ma"] * H2["aqpm"];
+    // C1["qp"] += 2.0 * alpha * T1["ma"] * H2["qapm"];
+C1["a3,a2,"] += 2.0 * alpha * T1["c6,a4,"] * H2_sym["a4,a3,c6,a2,"];//aaca****
+C1["a3,c2,"] += 2.0 * alpha * T1["c6,a4,"] * H2_sym["a3,a4,c2,c6,"];//aacc
+C1["a3,v2,"] += 2.0 * alpha * T1["c6,a4,"] * H2_sym["a4,a3,c6,v2,"];//aacv****
+C1["a3,a2,"] += 2.0 * alpha * T1["c6,v4,"] * H2_sym["a3,v4,a2,c6,"];//avac
+C1["v3,a2,"] += 2.0 * alpha * T1["c6,a4,"] * H2_sym["a4,v3,c6,a2,"];//avca****
+C1["a3,c2,"] += 2.0 * alpha * T1["c6,v4,"] * H2_sym["a3,v4,c2,c6,"];//avcc
+C1["v3,c2,"] += 2.0 * alpha * T1["c6,a4,"] * H2_sym["a4,v3,c6,c2,"];//avcc****
+C1["v3,v2,"] += 2.0 * alpha * T1["c6,a4,"] * H2_sym["a4,v3,c6,v2,"];//avcv****
+C1["a3,v2,"] += 2.0 * alpha * T1["c6,v4,"] * H2_sym["a3,v4,v2,c6,"];//avvc
+C1["c3,a2,"] += 2.0 * alpha * T1["c6,a4,"] * H2_sym["c3,a4,a2,c6,"];//caac
+C1["c3,c2,"] += 2.0 * alpha * T1["c6,a4,"] * H2_sym["c3,a4,c2,c6,"];//cacc
+C1["c3,v2,"] += 2.0 * alpha * T1["c6,a4,"] * H2_sym["c3,a4,v2,c6,"];//cavc
+C1["c3,a2,"] += 2.0 * alpha * T1["c6,v4,"] * H2_sym["c3,v4,a2,c6,"];//cvac
+C1["c3,c2,"] += 2.0 * alpha * T1["c6,v4,"] * H2_sym["c3,v4,c2,c6,"];//cvcc
+C1["c3,v2,"] += 2.0 * alpha * T1["c6,v4,"] * H2_sym["c3,v4,v2,c6,"];//cvvc
+C1["v3,a2,"] += 2.0 * alpha * T1["c6,v4,"] * H2_sym["v4,v3,c6,a2,"];//vvca****
+C1["v3,c2,"] += 2.0 * alpha * T1["c6,v4,"] * H2_sym["v3,v4,c2,c6,"];//vvcc
+C1["v3,v2,"] += 2.0 * alpha * T1["c6,v4,"] * H2_sym["v4,v3,c6,v2,"];//vvcv****
+    // C1["qp"] -= alpha * T1["ma"] * H2["aqpm"];
+C1["a3,a2,"] -= alpha * T1["c6,a4,"] * H2_sym["a3,a4,c6,a2,"];//aaca****
+C1["a3,c2,"] -= alpha * T1["c6,a4,"] * H2_sym["a4,a3,c2,c6,"];//aacc
+C1["a3,v2,"] -= alpha * T1["c6,a4,"] * H2_sym["a3,a4,c6,v2,"];//aacv****
+C1["v3,a2,"] -= alpha * T1["c6,a4,"] * H2_sym["a4,v3,a2,c6,"];//avac
+C1["a3,a2,"] -= alpha * T1["c6,v4,"] * H2_sym["a3,v4,c6,a2,"];//avca****
+C1["v3,c2,"] -= alpha * T1["c6,a4,"] * H2_sym["a4,v3,c2,c6,"];//avcc
+C1["a3,c2,"] -= alpha * T1["c6,v4,"] * H2_sym["a3,v4,c6,c2,"];//avcc****
+C1["a3,v2,"] -= alpha * T1["c6,v4,"] * H2_sym["a3,v4,c6,v2,"];//avcv****
+C1["v3,v2,"] -= alpha * T1["c6,a4,"] * H2_sym["a4,v3,v2,c6,"];//avvc
+C1["c3,a2,"] -= alpha * T1["c6,a4,"] * H2_sym["c3,a4,c6,a2,"];//caca****
+C1["c3,c2,"] -= alpha * T1["c6,a4,"] * H2_sym["c3,a4,c6,c2,"];//cacc****
+C1["c3,v2,"] -= alpha * T1["c6,a4,"] * H2_sym["c3,a4,c6,v2,"];//cacv****
+C1["c3,a2,"] -= alpha * T1["c6,v4,"] * H2_sym["c3,v4,c6,a2,"];//cvca****
+C1["c3,c2,"] -= alpha * T1["c6,v4,"] * H2_sym["c3,v4,c6,c2,"];//cvcc****
+C1["c3,v2,"] -= alpha * T1["c6,v4,"] * H2_sym["c3,v4,c6,v2,"];//cvcv****
+C1["v3,a2,"] -= alpha * T1["c6,v4,"] * H2_sym["v3,v4,c6,a2,"];//vvca****
+C1["v3,c2,"] -= alpha * T1["c6,v4,"] * H2_sym["v4,v3,c2,c6,"];//vvcc
+C1["v3,v2,"] -= alpha * T1["c6,v4,"] * H2_sym["v3,v4,c6,v2,"];//vvcv****
 
     // C1["qp"] += alpha * T1["xe"] * L1_["yx"] * H2["qepy"];
 C1["a3,a2,"] += alpha * T1["x,v7,"] * L1_["a9,x,"] * H2_sym["a3,v7,a2,a9,"];//avaa
