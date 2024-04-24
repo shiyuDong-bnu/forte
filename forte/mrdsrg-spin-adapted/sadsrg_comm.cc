@@ -376,12 +376,16 @@ std::vector<double> SADSRG::H2_T2_C0_T2small_sym(BlockedTensor& H2,BlockedTensor
     temp.set_name("temp_H2T2C0_L2");
 
     // HH
-    temp["uvxy"] += 0.5 * H2["uvmn"] * T2["mnxy"];
-    temp["uvxy"] += 0.5 * H2["uvmw"] * T2["mzxy"] * L1_["wz"];
+    // temp["uvxy"] += 0.5 * H2["uvmn"] * T2["mnxy"];
+    temp["a7,a6,x,y,"] += 0.5 * H2_sym["a7,a6,c9,c8,"] * T2["c9,c8,x,y,"];//aacc
+    // temp["uvxy"] += 0.5 * H2["uvmw"] * T2["mzxy"] * L1_["wz"];
+    temp["a7,a6,x,y,"] += 0.5 * H2_sym["a7,a6,c9,a8,"] * T2["c9,z,x,y,"] * L1_["a8,z,"];//aaca
 
     // PP
-    temp["uvxy"] += 0.5 * H2["efxy"] * T2["uvef"];
-    temp["uvxy"] += 0.5 * H2["ezxy"] * T2["uvew"] * Eta1_["wz"];
+    // temp["uvxy"] += 0.5 * H2["efxy"] * T2["uvef"];
+    temp["u,v,a6,a7,"] += 0.5 * H2_sym["v8,v9,a6,a7,"] * T2["u,v,v8,v9,"];//vvaa
+    // temp["uvxy"] += 0.5 * H2["ezxy"] * T2["uvew"] * Eta1_["wz"];
+    temp["u,v,a6,a7,"] += 0.5 * H2_sym["a9,v8,a7,a6,"] * T2["u,v,v8,w,"] * Eta1_["w,a9,"];//avaa****
 
     // HP
     temp["uvxy"] += H2["uexm"] * S2["vmye"];
