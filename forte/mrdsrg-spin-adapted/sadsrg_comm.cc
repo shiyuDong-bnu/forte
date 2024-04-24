@@ -439,8 +439,20 @@ void SADSRG::H2_T2_C1_sym(BlockedTensor& H2, BlockedTensor& H2_sym,BlockedTensor
 
     C1["pa"] -= 0.25 * alpha * S2["vyab"] * Eta1_["uv"] * Eta1_["xy"] * H2["pbux"];
 
-    C1["pa"] += 0.5 * alpha * Eta1_["uv"] * S2["vjae"] * H2["peuj"];
-    C1["pa"] += 0.5 * alpha * Eta1_["uv"] * S2["jvae"] * H2["peju"];
+    // C1["pa"] += 0.5 * alpha * Eta1_["uv"] * S2["vjae"] * H2["peuj"];
+C1["a2,a,"] += 0.5 * alpha * Eta1_["a9,v,"] * S2["v,a1,a,v7,"] * H2_sym["a2,v7,a9,a1,"];//avaa
+C1["a2,a,"] += 0.5 * alpha * Eta1_["a9,v,"] * S2["v,c1,a,v7,"] * H2_sym["a2,v7,a9,c1,"];//avac
+C1["c2,a,"] += 0.5 * alpha * Eta1_["a9,v,"] * S2["v,a1,a,v7,"] * H2_sym["c2,v7,a9,a1,"];//cvaa
+C1["c2,a,"] += 0.5 * alpha * Eta1_["a9,v,"] * S2["v,c1,a,v7,"] * H2_sym["c2,v7,a9,c1,"];//cvac
+C1["v2,a,"] += 0.5 * alpha * Eta1_["a9,v,"] * S2["v,a1,a,v7,"] * H2_sym["v2,v7,a9,a1,"];//vvaa
+C1["v2,a,"] += 0.5 * alpha * Eta1_["a9,v,"] * S2["v,c1,a,v7,"] * H2_sym["v7,v2,c1,a9,"];//vvca****
+    // C1["pa"] += 0.5 * alpha * Eta1_["uv"] * S2["jvae"] * H2["peju"];
+C1["a2,a,"] += 0.5 * alpha * Eta1_["a9,v,"] * S2["a1,v,a,v7,"] * H2_sym["a2,v7,a1,a9,"];//avaa
+C1["a2,a,"] += 0.5 * alpha * Eta1_["a9,v,"] * S2["c1,v,a,v7,"] * H2_sym["a2,v7,c1,a9,"];//avca
+C1["c2,a,"] += 0.5 * alpha * Eta1_["a9,v,"] * S2["a1,v,a,v7,"] * H2_sym["c2,v7,a1,a9,"];//cvaa
+C1["c2,a,"] += 0.5 * alpha * Eta1_["a9,v,"] * S2["c1,v,a,v7,"] * H2_sym["c2,v7,c1,a9,"];//cvca
+C1["v2,a,"] += 0.5 * alpha * Eta1_["a9,v,"] * S2["a1,v,a,v7,"] * H2_sym["v2,v7,a1,a9,"];//vvaa
+C1["v2,a,"] += 0.5 * alpha * Eta1_["a9,v,"] * S2["c1,v,a,v7,"] * H2_sym["v2,v7,c1,a9,"];//vvca
 
     // C1["pa"] += 0.25 * alpha * S2["vjax"] * Eta1_["uv"] * Eta1_["xy"] * H2["pyuj"];
 C1["a2,a,"] += 0.25 * alpha * S2["v,a9,a,x,"] * Eta1_["a1,v,"] * Eta1_["x,a8,"] * H2_sym["a2,a8,a1,a9,"];//aaaa
