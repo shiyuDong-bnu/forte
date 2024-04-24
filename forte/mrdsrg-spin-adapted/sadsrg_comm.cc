@@ -357,9 +357,26 @@ void SADSRG::H2_T1_C1_sym(BlockedTensor& H2, BlockedTensor& H2_sym,BlockedTensor
     C1["qp"] += alpha * T1["xe"] * L1_["yx"] * H2["qepy"];
     C1["qp"] -= 0.5 * alpha * T1["xe"] * L1_["yx"] * H2["eqpy"];
 
-    C1["qp"] -= alpha * T1["mu"] * L1_["uv"] * H2["qvpm"];
-    C1["qp"] += 0.5 * alpha * T1["mu"] * L1_["uv"] * H2["vqpm"];
-
+    // C1["qp"] -= alpha * T1["mu"] * L1_["uv"] * H2["qvpm"];
+C1["a3,a2,"] -= alpha * T1["c6,u,"] * L1_["u,a8,"] * H2_sym["a8,a3,c6,a2,"];//aaca****
+C1["a3,c2,"] -= alpha * T1["c6,u,"] * L1_["u,a8,"] * H2_sym["a3,a8,c2,c6,"];//aacc
+C1["a3,v2,"] -= alpha * T1["c6,u,"] * L1_["u,a8,"] * H2_sym["a8,a3,c6,v2,"];//aacv****
+C1["v3,a2,"] -= alpha * T1["c6,u,"] * L1_["u,a8,"] * H2_sym["a8,v3,c6,a2,"];//avca****
+C1["v3,c2,"] -= alpha * T1["c6,u,"] * L1_["u,a8,"] * H2_sym["a8,v3,c6,c2,"];//avcc****
+C1["v3,v2,"] -= alpha * T1["c6,u,"] * L1_["u,a8,"] * H2_sym["a8,v3,c6,v2,"];//avcv****
+C1["c3,a2,"] -= alpha * T1["c6,u,"] * L1_["u,a8,"] * H2_sym["c3,a8,a2,c6,"];//caac
+C1["c3,c2,"] -= alpha * T1["c6,u,"] * L1_["u,a8,"] * H2_sym["c3,a8,c2,c6,"];//cacc
+C1["c3,v2,"] -= alpha * T1["c6,u,"] * L1_["u,a8,"] * H2_sym["c3,a8,v2,c6,"];//cavc
+    // C1["qp"] += 0.5 * alpha * T1["mu"] * L1_["uv"] * H2["vqpm"];
+C1["a3,a2,"] += 0.5 * alpha * T1["c6,u,"] * L1_["u,a8,"] * H2_sym["a3,a8,c6,a2,"];//aaca****
+C1["a3,c2,"] += 0.5 * alpha * T1["c6,u,"] * L1_["u,a8,"] * H2_sym["a8,a3,c2,c6,"];//aacc
+C1["a3,v2,"] += 0.5 * alpha * T1["c6,u,"] * L1_["u,a8,"] * H2_sym["a3,a8,c6,v2,"];//aacv****
+C1["v3,a2,"] += 0.5 * alpha * T1["c6,u,"] * L1_["u,a8,"] * H2_sym["a8,v3,a2,c6,"];//avac
+C1["v3,c2,"] += 0.5 * alpha * T1["c6,u,"] * L1_["u,a8,"] * H2_sym["a8,v3,c2,c6,"];//avcc
+C1["v3,v2,"] += 0.5 * alpha * T1["c6,u,"] * L1_["u,a8,"] * H2_sym["a8,v3,v2,c6,"];//avvc
+C1["c3,a2,"] += 0.5 * alpha * T1["c6,u,"] * L1_["u,a8,"] * H2_sym["c3,a8,c6,a2,"];//caca****
+C1["c3,c2,"] += 0.5 * alpha * T1["c6,u,"] * L1_["u,a8,"] * H2_sym["c3,a8,c6,c2,"];//cacc****
+C1["c3,v2,"] += 0.5 * alpha * T1["c6,u,"] * L1_["u,a8,"] * H2_sym["c3,a8,c6,v2,"];//cacv****
     if (print_ > 3) {
         outfile->Printf("\n    Time for [H2, T1] -> C1 : %12.3f", timer.get());
     }
