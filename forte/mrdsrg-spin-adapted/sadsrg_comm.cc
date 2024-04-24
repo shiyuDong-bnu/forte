@@ -453,10 +453,12 @@ void SADSRG::H2_T2_C1_sym(BlockedTensor& H2, BlockedTensor& H2_sym,BlockedTensor
     C1["pa"] += 0.5 * alpha * H2["puxi"] * T2["viay"] * L2_["xyvu"];
 
     // [Hbar2, T2] C_4 C_2 1:3 -> C1
-    C1["jb"] += 0.5 * alpha * H2["avxy"] * S2["ujab"] * L2_["xyuv"];
-
-    C1["jb"] -= 0.5 * alpha * H2["uviy"] * S2["ijxb"] * L2_["xyuv"];
-
+    // C1["jb"] += 0.5 * alpha * H2["avxy"] * S2["ujab"] * L2_["xyuv"];
+C1["j,b,"] += 0.5 * alpha * H2_sym["a4,a9,a7,a8,"] * S2["u,j,a4,b,"] * L2_["a7,a8,u,a9,"];//aaaa
+C1["j,b,"] += 0.5 * alpha * H2_sym["a9,v4,a8,a7,"] * S2["u,j,v4,b,"] * L2_["a7,a8,u,a9,"];//avaa****
+    // C1["jb"] -= 0.5 * alpha * H2["uviy"] * S2["ijxb"] * L2_["xyuv"];
+C1["j,b,"] -= 0.5 * alpha * H2_sym["a7,a9,a1,a8,"] * S2["a1,j,x,b,"] * L2_["x,a8,a7,a9,"];//aaaa
+C1["j,b,"] -= 0.5 * alpha * H2_sym["a7,a9,c1,a8,"] * S2["c1,j,x,b,"] * L2_["x,a8,a7,a9,"];//aaca
     // C1["qs"] += alpha * H2["eqxs"] * T2["uvey"] * L2_["xyuv"];
 C1["a2,a3,"] += alpha * H2_sym["a2,v9,a3,a8,"] * T2["u,v,v9,y,"] * L2_["a8,y,u,v,"];//avaa****
 C1["a2,c3,"] += alpha * H2_sym["a2,v9,c3,a8,"] * T2["u,v,v9,y,"] * L2_["a8,y,u,v,"];//avca****
