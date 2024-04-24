@@ -348,15 +348,19 @@ std::vector<double> SADSRG::H2_T2_C0_T2small_sym(BlockedTensor& H2,BlockedTensor
     double E1 = 0.0, E2 = 0.0, E3 = 0.0;
 
     // [H2, T2] L1 from aavv
-    E1 += 0.25 * H2["efxu"] * S2["yvef"] * L1_["uv"] * L1_["xy"];
+    // E1 += 0.25 * H2["efxu"] * S2["yvef"] * L1_["uv"] * L1_["xy"];
+    E1 += 0.25 * H2_sym["v7,v8,a9,a6,"] * S2["y,v,v7,v8,"] * L1_["a6,v,"] * L1_["a9,y,"];//vvaa
 
     // [H2, T2] L1 from ccaa
-    E1 += 0.25 * H2["vymn"] * S2["mnux"] * Eta1_["uv"] * Eta1_["xy"];
+    // E1 += 0.25 * H2["vymn"] * S2["mnux"] * Eta1_["uv"] * Eta1_["xy"];
+    E1 += 0.25 * H2_sym["a6,a7,c8,c9,"] * S2["c8,c9,u,x,"] * Eta1_["u,a6,"] * Eta1_["x,a7,"];//aacc
 
     // [H2, T2] L1 from caav
     auto temp = ambit::BlockedTensor::build(tensor_type_, "temp_caav", {"aaaa"});
-    temp["uxyv"] += 0.5 * H2["vemx"] * S2["myue"];
-    temp["uxyv"] += 0.5 * H2["vexm"] * S2["ymue"];
+    // temp["uxyv"] += 0.5 * H2["vemx"] * S2["myue"];
+    temp["u,a7,y,a6,"] += 0.5 * H2_sym["a6,v9,c8,a7,"] * S2["c8,y,u,v9,"];//avca
+    // temp["uxyv"] += 0.5 * H2["vexm"] * S2["ymue"];
+    temp["u,a7,y,a6,"] += 0.5 * H2_sym["a6,v9,a7,c8,"] * S2["y,c8,u,v9,"];//avac
     E1 += temp["uxyv"] * Eta1_["uv"] * L1_["xy"];
 
     // [H2, T2] L1 from caaa and aaav
