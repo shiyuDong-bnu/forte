@@ -413,7 +413,19 @@ void SADSRG::H2_T2_C1_sym(BlockedTensor& H2, BlockedTensor& H2_sym,BlockedTensor
     local_timer timer;
     std::cout<<"Testing function";
     // [Hbar2, T2] (C_2)^3 -> C1 particle contractions
-    C1["ir"] += alpha * H2["abrm"] * S2["imab"];
+    // C1["ir"] += alpha * H2["abrm"] * S2["imab"];
+ C1["i,a2,"] += alpha * H2_sym["a5,a4,c6,a2,"] * S2["i,c6,a4,a5,"];//aaca****
+ C1["i,c2,"] += alpha * H2_sym["a4,a5,c2,c6,"] * S2["i,c6,a4,a5,"];//aacc
+ C1["i,v2,"] += alpha * H2_sym["a5,a4,c6,v2,"] * S2["i,c6,a4,a5,"];//aacv****
+ C1["i,a2,"] += alpha * H2_sym["a4,v5,a2,c6,"] * S2["i,c6,a4,v5,"];//avac
+ C1["i,a2,"] += alpha * H2_sym["a5,v4,c6,a2,"] * S2["i,c6,v4,a5,"];//avca****
+ C1["i,c2,"] += alpha * H2_sym["a4,v5,c2,c6,"] * S2["i,c6,a4,v5,"];//avcc
+ C1["i,c2,"] += alpha * H2_sym["a5,v4,c6,c2,"] * S2["i,c6,v4,a5,"];//avcc****
+ C1["i,v2,"] += alpha * H2_sym["a5,v4,c6,v2,"] * S2["i,c6,v4,a5,"];//avcv****
+ C1["i,v2,"] += alpha * H2_sym["a4,v5,v2,c6,"] * S2["i,c6,a4,v5,"];//avvc
+ C1["i,a2,"] += alpha * H2_sym["v5,v4,c6,a2,"] * S2["i,c6,v4,v5,"];//vvca****
+ C1["i,c2,"] += alpha * H2_sym["v4,v5,c2,c6,"] * S2["i,c6,v4,v5,"];//vvcc
+ C1["i,v2,"] += alpha * H2_sym["v5,v4,c6,v2,"] * S2["i,c6,v4,v5,"];//vvcv****
 
     // C1["ir"] += 0.5 * alpha * L1_["uv"] * S2["ivab"] * H2["abru"];
 C1["i,a2,"] += 0.5 * alpha * L1_["a9,v,"] * S2["i,v,a4,a5,"] * H2_sym["a4,a5,a2,a9,"];//aaaa
