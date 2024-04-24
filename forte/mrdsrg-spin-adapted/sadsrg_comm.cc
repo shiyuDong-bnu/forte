@@ -422,9 +422,20 @@ void SADSRG::H2_T2_C1_sym(BlockedTensor& H2, BlockedTensor& H2_sym,BlockedTensor
     C1["ir"] -= 0.5 * alpha * L1_["uv"] * S2["imub"] * H2["vbrm"];
     C1["ir"] -= 0.5 * alpha * L1_["uv"] * S2["miub"] * H2["bvrm"];
 
-    C1["ir"] -= 0.25 * alpha * S2["iyub"] * L1_["uv"] * L1_["xy"] * H2["vbrx"];
-    C1["ir"] -= 0.25 * alpha * S2["iybu"] * L1_["uv"] * L1_["xy"] * H2["bvrx"];
-
+    // C1["ir"] -= 0.25 * alpha * S2["iyub"] * L1_["uv"] * L1_["xy"] * H2["vbrx"];
+C1["i,a2,"] -= 0.25 * alpha * S2["i,y,u,a5,"] * L1_["u,a8,"] * L1_["a9,y,"] * H2_sym["a8,a5,a2,a9,"];//aaaa
+C1["i,v2,"] -= 0.25 * alpha * S2["i,y,u,a5,"] * L1_["u,a8,"] * L1_["a9,y,"] * H2_sym["a5,a8,a9,v2,"];//aaav****
+C1["i,c2,"] -= 0.25 * alpha * S2["i,y,u,a5,"] * L1_["u,a8,"] * L1_["a9,y,"] * H2_sym["a8,a5,c2,a9,"];//aaca
+C1["i,a2,"] -= 0.25 * alpha * S2["i,y,u,v5,"] * L1_["u,a8,"] * L1_["a9,y,"] * H2_sym["a8,v5,a2,a9,"];//avaa
+C1["i,c2,"] -= 0.25 * alpha * S2["i,y,u,v5,"] * L1_["u,a8,"] * L1_["a9,y,"] * H2_sym["a8,v5,c2,a9,"];//avca
+C1["i,v2,"] -= 0.25 * alpha * S2["i,y,u,v5,"] * L1_["u,a8,"] * L1_["a9,y,"] * H2_sym["a8,v5,v2,a9,"];//avva
+    // C1["ir"] -= 0.25 * alpha * S2["iybu"] * L1_["uv"] * L1_["xy"] * H2["bvrx"];
+C1["i,a2,"] -= 0.25 * alpha * S2["i,y,a5,u,"] * L1_["u,a8,"] * L1_["a9,y,"] * H2_sym["a5,a8,a2,a9,"];//aaaa
+C1["i,v2,"] -= 0.25 * alpha * S2["i,y,a5,u,"] * L1_["u,a8,"] * L1_["a9,y,"] * H2_sym["a8,a5,a9,v2,"];//aaav****
+C1["i,c2,"] -= 0.25 * alpha * S2["i,y,a5,u,"] * L1_["u,a8,"] * L1_["a9,y,"] * H2_sym["a5,a8,c2,a9,"];//aaca
+C1["i,a2,"] -= 0.25 * alpha * S2["i,y,v5,u,"] * L1_["u,a8,"] * L1_["a9,y,"] * H2_sym["a8,v5,a9,a2,"];//avaa****
+C1["i,c2,"] -= 0.25 * alpha * S2["i,y,v5,u,"] * L1_["u,a8,"] * L1_["a9,y,"] * H2_sym["a8,v5,a9,c2,"];//avac****
+C1["i,v2,"] -= 0.25 * alpha * S2["i,y,v5,u,"] * L1_["u,a8,"] * L1_["a9,y,"] * H2_sym["a8,v5,a9,v2,"];//avav****
     // [Hbar2, T2] C_4 C_2 2:2 -> C1 ir
     // C1["ir"] += 0.5 * alpha * T2["ijxy"] * L2_["xyuv"] * H2["uvrj"];
 C1["i,a2,"] += 0.5 * alpha * T2["i,a1,x,y,"] * L2_["x,y,a9,a8,"] * H2_sym["a9,a8,a2,a1,"];//aaaa
