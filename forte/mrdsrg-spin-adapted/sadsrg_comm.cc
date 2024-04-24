@@ -142,15 +142,18 @@ std::vector<double> SADSRG::H2_T2_C0_sym(BlockedTensor& H2, BlockedTensor& H2_sy
 
     std::vector<double> Eout{0.0, 0.0, 0.0};
     double E = 0.0;
+    std::cout<<"Testing function";
 
     // [H2, T2] (C_2)^4 from ccvv
-    E += H2["efmn"] * S2["mnef"];
-
+    // E += H2["efmn"] * S2["mnef"];
+    E += H2_sym["v7,v8,c6,c9,"] * S2["c6,c9,v7,v8,"];//vvcc
     // [H2, T2] (C_2)^4 L1 from cavv
-    E += H2["efmu"] * S2["mvef"] * L1_["uv"];
+    // E += H2["efmu"] * S2["mvef"] * L1_["uv"];
+    E += H2_sym["v7,v8,c6,a9,"] * S2["c6,v,v7,v8,"] * L1_["a9,v,"];//vvca
 
     // [H2, T2] (C_2)^4 L1 from ccav
-    E += H2["vemn"] * S2["mnue"] * Eta1_["uv"];
+    // E += H2["vemn"] * S2["mnue"] * Eta1_["uv"];
+    E += H2_sym["a8,v7,c6,c9,"] * S2["c6,c9,u,v7,"] * Eta1_["u,a8,"];//avcc
 
     Eout[0] += E;
 
