@@ -376,7 +376,7 @@ class SADSRG : public DynamicCorrelationSolver {
     std::vector<double> H2_T2_C0(BlockedTensor& H2, BlockedTensor& T2, BlockedTensor& S2,
                                  const double& alpha, double& C0);
     //// the same function of H2_T1_C2 using symmetry
-    std::vector<double> H2_T2_C0_sym(BlockedTensor& H2,BlockedTensor& H2_sym, BlockedTensor& T2, BlockedTensor& S2,
+    std::vector<double> H2_T2_C0_sym(BlockedTensor& H2_sym, BlockedTensor& T2, BlockedTensor& S2,
                                  const double& alpha, double& C0);
     /// Compute zero-body term of commutator [H2, T2], T2 and S2 contain at least two active indices
     std::vector<double> H2_T2_C0_T2small(BlockedTensor& H2, BlockedTensor& T2, BlockedTensor& S2);

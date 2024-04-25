@@ -136,7 +136,7 @@ std::vector<double> SADSRG::H2_T2_C0(BlockedTensor& H2, BlockedTensor& T2, Block
     dsrg_time_.add("220", timer.get());
     return Eout;
 }
-std::vector<double> SADSRG::H2_T2_C0_sym(BlockedTensor& H2, BlockedTensor& H2_sym,BlockedTensor& T2, BlockedTensor& S2,
+std::vector<double> SADSRG::H2_T2_C0_sym( BlockedTensor& H2_sym,BlockedTensor& T2, BlockedTensor& S2,
                                      const double& alpha, double& C0) {
     local_timer timer;
 
