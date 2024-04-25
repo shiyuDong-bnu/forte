@@ -199,7 +199,7 @@ void SA_MRDSRG::compute_hbar() {
         Hbar2_["pqrs"] = B_["gpr"] * B_["gqs"];
     } else {
         Hbar2_["pqrs"] = V_["pqrs"];
-        O2_["pqrs"] = Hbar2_["pqrs"];
+        // O2_["pqrs"] = Hbar2_["pqrs"];
         O2_sym["pqrs"] = Hbar2_["pqrs"];
     }
 
@@ -273,8 +273,90 @@ void SA_MRDSRG::compute_hbar() {
         C0 *= 2.0;
         O1_["pq"] = C1_["pq"];
         C1_["pq"] += O1_["qp"];
-        O2_["pqrs"] = C2_["pqrs"];
-        C2_["pqrs"] += O2_["rspq"];
+        // O2_["pqrs"] = C2_["pqrs"];
+        O2_sym["pqrs"] = C2_["pqrs"];
+        // C2_["pqrs"] += O2_["rspq"];
+C2_["a2,a3,a4,a5,"] += O2_sym["a4,a5,a2,a3,"];//aaaa
+C2_["a2,v3,a4,a5,"] += O2_sym["a4,a5,a2,v3,"];//aaav
+C2_["v2,a3,a4,a5,"] += O2_sym["a5,a4,a3,v2,"];//aaav****
+C2_["c2,a3,a4,a5,"] += O2_sym["a4,a5,c2,a3,"];//aaca
+C2_["a2,c3,a4,a5,"] += O2_sym["a5,a4,c3,a2,"];//aaca****
+C2_["c2,c3,a4,a5,"] += O2_sym["a4,a5,c2,c3,"];//aacc
+C2_["c2,v3,a4,a5,"] += O2_sym["a4,a5,c2,v3,"];//aacv
+C2_["v2,c3,a4,a5,"] += O2_sym["a5,a4,c3,v2,"];//aacv****
+C2_["v2,v3,a4,a5,"] += O2_sym["a4,a5,v2,v3,"];//aavv
+C2_["a2,a3,a4,v5,"] += O2_sym["a4,v5,a2,a3,"];//avaa
+C2_["a2,a3,v4,a5,"] += O2_sym["a5,v4,a3,a2,"];//avaa****
+C2_["a2,c3,a4,v5,"] += O2_sym["a4,v5,a2,c3,"];//avac
+C2_["c2,a3,v4,a5,"] += O2_sym["a5,v4,a3,c2,"];//avac****
+C2_["a2,v3,a4,v5,"] += O2_sym["a4,v5,a2,v3,"];//avav
+C2_["v2,a3,v4,a5,"] += O2_sym["a5,v4,a3,v2,"];//avav****
+C2_["c2,a3,a4,v5,"] += O2_sym["a4,v5,c2,a3,"];//avca
+C2_["a2,c3,v4,a5,"] += O2_sym["a5,v4,c3,a2,"];//avca****
+C2_["c2,c3,a4,v5,"] += O2_sym["a4,v5,c2,c3,"];//avcc
+C2_["c2,c3,v4,a5,"] += O2_sym["a5,v4,c3,c2,"];//avcc****
+C2_["c2,v3,a4,v5,"] += O2_sym["a4,v5,c2,v3,"];//avcv
+C2_["v2,c3,v4,a5,"] += O2_sym["a5,v4,c3,v2,"];//avcv****
+C2_["v2,a3,a4,v5,"] += O2_sym["a4,v5,v2,a3,"];//avva
+C2_["a2,v3,v4,a5,"] += O2_sym["a5,v4,v3,a2,"];//avva****
+C2_["v2,c3,a4,v5,"] += O2_sym["a4,v5,v2,c3,"];//avvc
+C2_["c2,v3,v4,a5,"] += O2_sym["a5,v4,v3,c2,"];//avvc****
+C2_["v2,v3,a4,v5,"] += O2_sym["a4,v5,v2,v3,"];//avvv
+C2_["v2,v3,v4,a5,"] += O2_sym["a5,v4,v3,v2,"];//avvv****
+C2_["a2,a3,c4,a5,"] += O2_sym["c4,a5,a2,a3,"];//caaa
+C2_["a2,a3,a4,c5,"] += O2_sym["c5,a4,a3,a2,"];//caaa****
+C2_["a2,c3,c4,a5,"] += O2_sym["c4,a5,a2,c3,"];//caac
+C2_["c2,a3,a4,c5,"] += O2_sym["c5,a4,a3,c2,"];//caac****
+C2_["a2,v3,c4,a5,"] += O2_sym["c4,a5,a2,v3,"];//caav
+C2_["v2,a3,a4,c5,"] += O2_sym["c5,a4,a3,v2,"];//caav****
+C2_["c2,a3,c4,a5,"] += O2_sym["c4,a5,c2,a3,"];//caca
+C2_["a2,c3,a4,c5,"] += O2_sym["c5,a4,c3,a2,"];//caca****
+C2_["c2,c3,c4,a5,"] += O2_sym["c4,a5,c2,c3,"];//cacc
+C2_["c2,c3,a4,c5,"] += O2_sym["c5,a4,c3,c2,"];//cacc****
+C2_["c2,v3,c4,a5,"] += O2_sym["c4,a5,c2,v3,"];//cacv
+C2_["v2,c3,a4,c5,"] += O2_sym["c5,a4,c3,v2,"];//cacv****
+C2_["v2,a3,c4,a5,"] += O2_sym["c4,a5,v2,a3,"];//cava
+C2_["a2,v3,a4,c5,"] += O2_sym["c5,a4,v3,a2,"];//cava****
+C2_["v2,c3,c4,a5,"] += O2_sym["c4,a5,v2,c3,"];//cavc
+C2_["c2,v3,a4,c5,"] += O2_sym["c5,a4,v3,c2,"];//cavc****
+C2_["v2,v3,c4,a5,"] += O2_sym["c4,a5,v2,v3,"];//cavv
+C2_["v2,v3,a4,c5,"] += O2_sym["c5,a4,v3,v2,"];//cavv****
+C2_["a2,a3,c4,c5,"] += O2_sym["c4,c5,a2,a3,"];//ccaa
+C2_["a2,v3,c4,c5,"] += O2_sym["c4,c5,a2,v3,"];//ccav
+C2_["v2,a3,c4,c5,"] += O2_sym["c5,c4,a3,v2,"];//ccav****
+C2_["c2,a3,c4,c5,"] += O2_sym["c4,c5,c2,a3,"];//ccca
+C2_["a2,c3,c4,c5,"] += O2_sym["c5,c4,c3,a2,"];//ccca****
+C2_["c2,c3,c4,c5,"] += O2_sym["c4,c5,c2,c3,"];//cccc
+C2_["c2,v3,c4,c5,"] += O2_sym["c4,c5,c2,v3,"];//cccv
+C2_["v2,c3,c4,c5,"] += O2_sym["c5,c4,c3,v2,"];//cccv****
+C2_["v2,v3,c4,c5,"] += O2_sym["c4,c5,v2,v3,"];//ccvv
+C2_["a2,a3,c4,v5,"] += O2_sym["c4,v5,a2,a3,"];//cvaa
+C2_["a2,a3,v4,c5,"] += O2_sym["c5,v4,a3,a2,"];//cvaa****
+C2_["a2,c3,c4,v5,"] += O2_sym["c4,v5,a2,c3,"];//cvac
+C2_["c2,a3,v4,c5,"] += O2_sym["c5,v4,a3,c2,"];//cvac****
+C2_["a2,v3,c4,v5,"] += O2_sym["c4,v5,a2,v3,"];//cvav
+C2_["v2,a3,v4,c5,"] += O2_sym["c5,v4,a3,v2,"];//cvav****
+C2_["c2,a3,c4,v5,"] += O2_sym["c4,v5,c2,a3,"];//cvca
+C2_["a2,c3,v4,c5,"] += O2_sym["c5,v4,c3,a2,"];//cvca****
+C2_["c2,c3,c4,v5,"] += O2_sym["c4,v5,c2,c3,"];//cvcc
+C2_["c2,c3,v4,c5,"] += O2_sym["c5,v4,c3,c2,"];//cvcc****
+C2_["c2,v3,c4,v5,"] += O2_sym["c4,v5,c2,v3,"];//cvcv
+C2_["v2,c3,v4,c5,"] += O2_sym["c5,v4,c3,v2,"];//cvcv****
+C2_["v2,a3,c4,v5,"] += O2_sym["c4,v5,v2,a3,"];//cvva
+C2_["a2,v3,v4,c5,"] += O2_sym["c5,v4,v3,a2,"];//cvva****
+C2_["v2,c3,c4,v5,"] += O2_sym["c4,v5,v2,c3,"];//cvvc
+C2_["c2,v3,v4,c5,"] += O2_sym["c5,v4,v3,c2,"];//cvvc****
+C2_["v2,v3,c4,v5,"] += O2_sym["c4,v5,v2,v3,"];//cvvv
+C2_["v2,v3,v4,c5,"] += O2_sym["c5,v4,v3,v2,"];//cvvv****
+C2_["a2,a3,v4,v5,"] += O2_sym["v4,v5,a2,a3,"];//vvaa
+C2_["a2,v3,v4,v5,"] += O2_sym["v4,v5,a2,v3,"];//vvav
+C2_["v2,a3,v4,v5,"] += O2_sym["v5,v4,a3,v2,"];//vvav****
+C2_["c2,a3,v4,v5,"] += O2_sym["v4,v5,c2,a3,"];//vvca
+C2_["a2,c3,v4,v5,"] += O2_sym["v5,v4,c3,a2,"];//vvca****
+C2_["c2,c3,v4,v5,"] += O2_sym["v4,v5,c2,c3,"];//vvcc
+C2_["c2,v3,v4,v5,"] += O2_sym["v4,v5,c2,v3,"];//vvcv
+C2_["v2,c3,v4,v5,"] += O2_sym["v5,v4,c3,v2,"];//vvcv****
+C2_["v2,v3,v4,v5,"] += O2_sym["v4,v5,v2,v3,"];//vvvv
 
         // Hbar += C
         Hbar0_ += C0;
@@ -283,7 +365,7 @@ void SA_MRDSRG::compute_hbar() {
 
         // copy C to O for next level commutator
         O1_["pq"] = C1_["pq"];
-        O2_["pqrs"] = C2_["pqrs"];
+        // O2_["pqrs"] = C2_["pqrs"];
         O2_sym["pqrs"] = C2_["pqrs"];
 
         // test convergence of C
@@ -594,7 +676,7 @@ void SA_MRDSRG::setup_ldsrg2_tensors() {
             C2_ = BTF_->build(tensor_type_, "C2", blocks_exclude_V3);
         } else {
             Hbar2_ = BTF_->build(tensor_type_, "Hbar2", {"gggg"});
-            O2_ = BTF_->build(tensor_type_, "O2", {"gggg"});
+            // O2_ = BTF_->build(tensor_type_, "O2", {"gggg"});
             C2_ = BTF_->build(tensor_type_, "C2", {"gggg"});
             O2_sym = BTF_->build(tensor_type_, "O2", {   
                 "aaaa","aaav","aaca","aacc","aacv",
