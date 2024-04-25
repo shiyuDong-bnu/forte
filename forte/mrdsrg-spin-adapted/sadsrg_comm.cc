@@ -427,87 +427,88 @@ std::vector<double> SADSRG::H2_T2_C0_T2small_sym(BlockedTensor& H2,BlockedTensor
 
             // - need to transform the integrals to the same orbital basis as active space solver
             // - TODO: maybe we (York) should make the CI vectors consistent at the first place
-            ambit::Tensor Tbra, Tket;
-            ambit::Tensor Ua = Uactv_.block("aa");
+            std::cout<<"Direct algorithm for 3rdm";
+            // ambit::Tensor Tbra, Tket;
+            // ambit::Tensor Ua = Uactv_.block("aa");
 
-            timer timer_v("DSRG [H2, T2] D3V direct");
-            Tbra = H2.block("vaaa").clone();
-            Tbra("ewuv") = H2.block("vaaa")("ezxy") * Ua("wz") * Ua("ux") * Ua("vy");
-            Tket = T2.block("aava").clone();
-            Tket("uvew") = T2.block("aava")("xyez") * Ua("wz") * Ua("ux") * Ua("vy");
-            auto E3v_map = as_solver_->compute_complementary_H2caa_overlap(Tbra, Tket);
-            timer_v.stop();
+            // timer timer_v("DSRG [H2, T2] D3V direct");
+            // Tbra = H2.block("vaaa").clone();
+            // Tbra("ewuv") = H2.block("vaaa")("ezxy") * Ua("wz") * Ua("ux") * Ua("vy");
+            // Tket = T2.block("aava").clone();
+            // Tket("uvew") = T2.block("aava")("xyez") * Ua("wz") * Ua("ux") * Ua("vy");
+            // auto E3v_map = as_solver_->compute_complementary_H2caa_overlap(Tbra, Tket);
+            // timer_v.stop();
 
-            timer timer_c("DSRG [H2, T2] D3C direct");
-            Tbra = T2.block("caaa").clone();
-            Tbra("mwuv") = T2.block("caaa")("mzxy") * Ua("wz") * Ua("ux") * Ua("vy");
-            Tket = H2.block("aaca").clone();
-            Tket("uvmw") = H2.block("aaca")("xymz") * Ua("wz") * Ua("ux") * Ua("vy");
-            auto E3c_map = as_solver_->compute_complementary_H2caa_overlap(Tbra, Tket);
-            timer_c.stop();
+            // timer timer_c("DSRG [H2, T2] D3C direct");
+            // Tbra = T2.block("caaa").clone();
+            // Tbra("mwuv") = T2.block("caaa")("mzxy") * Ua("wz") * Ua("ux") * Ua("vy");
+            // Tket = H2.block("aaca").clone();
+            // Tket("uvmw") = H2.block("aaca")("xymz") * Ua("wz") * Ua("ux") * Ua("vy");
+            // auto E3c_map = as_solver_->compute_complementary_H2caa_overlap(Tbra, Tket);
+            // timer_c.stop();
 
-            // - 2-RDM contributions
-            auto G2 = ambit::BlockedTensor::build(ambit::CoreTensor, "G2", {"aaaa"});
-            G2.block("aaaa")("pqrs") = rdms_->SF_G2()("pqrs");
+            // // - 2-RDM contributions
+            // auto G2 = ambit::BlockedTensor::build(ambit::CoreTensor, "G2", {"aaaa"});
+            // G2.block("aaaa")("pqrs") = rdms_->SF_G2()("pqrs");
 
-            double E3v = -H2["ezxy"] * T2["uvez"] * G2["xyuv"];
-            double E3c = T2["mzxy"] * H2["uvmz"] * G2["xyuv"];
+            // double E3v = -H2["ezxy"] * T2["uvez"] * G2["xyuv"];
+            // double E3c = T2["mzxy"] * H2["uvmz"] * G2["xyuv"];
 
-            // - add together
-            for (const auto& state_weights : state_to_weights_) {
-                const auto& state = state_weights.first;
-                const auto& weights = state_weights.second;
-                for (size_t i = 0, nroots = weights.size(); i < nroots; ++i) {
-                    if (weights[i] < 1.0e-15)
-                        continue;
-                    E3v += weights[i] * E3v_map[state][i];
-                    E3c -= weights[i] * E3c_map[state][i];
-                }
-            }
+            // // - add together
+            // for (const auto& state_weights : state_to_weights_) {
+            //     const auto& state = state_weights.first;
+            //     const auto& weights = state_weights.second;
+            //     for (size_t i = 0, nroots = weights.size(); i < nroots; ++i) {
+            //         if (weights[i] < 1.0e-15)
+            //             continue;
+            //         E3v += weights[i] * E3v_map[state][i];
+            //         E3c -= weights[i] * E3c_map[state][i];
+            //     }
+            // }
 
-            // => spin-free 1- and 2-cumulant contributions <=
+            // // => spin-free 1- and 2-cumulant contributions <=
 
-            // - virtual contraction
-            temp = ambit::BlockedTensor::build(tensor_type_, "temp_va", {"va"});
-            temp["ex"] = H2["ewxy"] * L1_["yw"];
-            temp["ex"] -= 0.5 * H2["ewyx"] * L1_["yw"];
-            E3v -= temp["ex"] * T2["uvez"] * G2["xzuv"];
+            // // - virtual contraction
+            // temp = ambit::BlockedTensor::build(tensor_type_, "temp_va", {"va"});
+            // temp["ex"] = H2["ewxy"] * L1_["yw"];
+            // temp["ex"] -= 0.5 * H2["ewyx"] * L1_["yw"];
+            // E3v -= temp["ex"] * T2["uvez"] * G2["xzuv"];
 
-            temp["eu"] = 0.5 * S2["uvez"] * L1_["zv"];
-            E3v -= H2["ewxy"] * temp["eu"] * L2_["xyuw"];
+            // temp["eu"] = 0.5 * S2["uvez"] * L1_["zv"];
+            // E3v -= H2["ewxy"] * temp["eu"] * L2_["xyuw"];
 
-            temp = ambit::BlockedTensor::build(tensor_type_, "temp_vaaa", {"vaaa"});
-            temp["ewuy"] = H2["ewxy"] * L1_["xu"];
-            E3v -= 0.5 * temp["ewuy"] * S2["uvez"] * L2_["yzwv"];
+            // temp = ambit::BlockedTensor::build(tensor_type_, "temp_vaaa", {"vaaa"});
+            // temp["ewuy"] = H2["ewxy"] * L1_["xu"];
+            // E3v -= 0.5 * temp["ewuy"] * S2["uvez"] * L2_["yzwv"];
 
-            temp["ewxu"] = H2["ewxy"] * L1_["yu"];
-            E3v += 0.5 * temp["ewxu"] * T2["uvez"] * L2_["xzwv"];
-            E3v += 0.5 * temp["ewxv"] * T2["uvez"] * L2_["xzuw"];
+            // temp["ewxu"] = H2["ewxy"] * L1_["yu"];
+            // E3v += 0.5 * temp["ewxu"] * T2["uvez"] * L2_["xzwv"];
+            // E3v += 0.5 * temp["ewxv"] * T2["uvez"] * L2_["xzuw"];
 
-            temp["ezxy"] = H2["ewxy"] * L1_["zw"];
-            E3v += 0.5 * temp["ezxy"] * T2["uvez"] * G2["xyuv"];
+            // temp["ezxy"] = H2["ewxy"] * L1_["zw"];
+            // E3v += 0.5 * temp["ezxy"] * T2["uvez"] * G2["xyuv"];
 
-            // - core contraction
-            temp = ambit::BlockedTensor::build(tensor_type_, "temp_ac", {"ac"});
-            temp["um"] = H2["uvmz"] * L1_["zv"];
-            temp["um"] -= 0.5 * H2["vumz"] * L1_["zv"];
-            E3c += temp["um"] * T2["mwxy"] * L2_["xyuw"];
+            // // - core contraction
+            // temp = ambit::BlockedTensor::build(tensor_type_, "temp_ac", {"ac"});
+            // temp["um"] = H2["uvmz"] * L1_["zv"];
+            // temp["um"] -= 0.5 * H2["vumz"] * L1_["zv"];
+            // E3c += temp["um"] * T2["mwxy"] * L2_["xyuw"];
 
-            temp["xm"] = S2["mwxy"] * L1_["yw"];
-            E3c += 0.5 * H2["uvmz"] * temp["xm"] * G2["xzuv"];
+            // temp["xm"] = S2["mwxy"] * L1_["yw"];
+            // E3c += 0.5 * H2["uvmz"] * temp["xm"] * G2["xzuv"];
 
-            temp = ambit::BlockedTensor::build(tensor_type_, "temp_caaa", {"caaa"});
-            temp["mzxv"] = H2["uvmz"] * L1_["xu"];
-            E3c += 0.5 * temp["mzxv"] * S2["mwxy"] * L2_["yzwv"];
+            // temp = ambit::BlockedTensor::build(tensor_type_, "temp_caaa", {"caaa"});
+            // temp["mzxv"] = H2["uvmz"] * L1_["xu"];
+            // E3c += 0.5 * temp["mzxv"] * S2["mwxy"] * L2_["yzwv"];
 
-            temp["mzuy"] = H2["uvmz"] * L1_["yv"];
-            E3c -= 0.5 * temp["mzuy"] * T2["mwxy"] * L2_["xzuw"];
-            E3c -= 0.5 * temp["mzux"] * T2["mwxy"] * L2_["yzwu"];
+            // temp["mzuy"] = H2["uvmz"] * L1_["yv"];
+            // E3c -= 0.5 * temp["mzuy"] * T2["mwxy"] * L2_["xzuw"];
+            // E3c -= 0.5 * temp["mzux"] * T2["mwxy"] * L2_["yzwu"];
 
-            temp["mwuv"] = H2["uvmz"] * L1_["zw"];
-            E3c -= 0.5 * temp["mwuv"] * T2["mwxy"] * G2["xyuv"];
+            // temp["mwuv"] = H2["uvmz"] * L1_["zw"];
+            // E3c -= 0.5 * temp["mwuv"] * T2["mwxy"] * G2["xyuv"];
 
-            E3 += E3c + E3v;
+            // E3 += E3c + E3v;
         }
     }
 
