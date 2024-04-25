@@ -404,10 +404,12 @@ std::vector<double> SADSRG::H2_T2_C0_T2small_sym(BlockedTensor& H2,BlockedTensor
     temp["u,a7,a6,y,"] -= 0.5 * H2_sym["a7,v8,a9,a6,"] * T2["u,z,v8,y,"] * L1_["a9,z,"];//avaa****
 
     // HP with Eta1
-    temp["uvxy"] += 0.5 * H2["wumx"] * S2["mvzy"] * Eta1_["wz"];
-    temp["uvxy"] -= 0.5 * H2["uwmx"] * T2["mvzy"] * Eta1_["wz"];
-    temp["uvxy"] -= 0.5 * H2["vwmx"] * T2["muyz"] * Eta1_["wz"];
-
+    // temp["uvxy"] += 0.5 * H2["wumx"] * S2["mvzy"] * Eta1_["wz"];
+    temp["a7,v,a6,y,"] += 0.5 * H2_sym["a9,a7,c8,a6,"] * S2["c8,v,z,y,"] * Eta1_["a9,z,"];//aaca
+    // temp["uvxy"] -= 0.5 * H2["uwmx"] * T2["mvzy"] * Eta1_["wz"];
+    temp["a7,v,a6,y,"] -= 0.5 * H2_sym["a7,a9,c8,a6,"] * T2["c8,v,z,y,"] * Eta1_["a9,z,"];//aaca
+    // temp["uvxy"] -= 0.5 * H2["vwmx"] * T2["muyz"] * Eta1_["wz"];
+    temp["u,a7,a6,y,"] -= 0.5 * H2_sym["a7,a9,c8,a6,"] * T2["c8,u,y,z,"] * Eta1_["a9,z,"];//aaca
     E2 += temp["uvxy"] * L2_["uvxy"];
 
     // <[Hbar2, T2]> C_6 C_2
