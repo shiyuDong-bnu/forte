@@ -528,7 +528,6 @@ void SA_MRDSRG::compute_hbar_sequential() {
             // two-body
             H1_T2_C2(O1_, T2_, factor, C2_);
             H2_T2_C2(O2_, T2_, DT2_, factor, C2_);
-            // H2_T2_C2(O2_sym, T2_, DT2_, factor, C2_);
         }
 
         // printing level
