@@ -157,7 +157,7 @@ std::vector<double> SADSRG::H2_T2_C0_sym(BlockedTensor& H2, BlockedTensor& H2_sy
     Eout[0] += E;
 
     // other terms involving T2 with at least two active indices
-    auto Esmall = H2_T2_C0_T2small_sym(H2,H2_sym, T2, S2);
+    auto Esmall = H2_T2_C0_T2small_sym(H2_sym, T2, S2);
 
     for (int i = 0; i < 3; ++i) {
         E += Esmall[i];
@@ -335,7 +335,7 @@ std::vector<double> SADSRG::H2_T2_C0_T2small(BlockedTensor& H2, BlockedTensor& T
     return {E1, E2, E3};
 }
 
-std::vector<double> SADSRG::H2_T2_C0_T2small_sym(BlockedTensor& H2,BlockedTensor& H2_sym,  BlockedTensor& T2,
+std::vector<double> SADSRG::H2_T2_C0_T2small_sym(BlockedTensor& H2_sym,  BlockedTensor& T2,
                                              BlockedTensor& S2) {
     /**
      * Note the following blocks should be available in memory.
@@ -419,7 +419,6 @@ std::vector<double> SADSRG::H2_T2_C0_T2small_sym(BlockedTensor& H2,BlockedTensor
             // E3 -= H2.block("aaca")("uvmz") * T2.block("caaa")("mwxy") * L3_("xyzuwv");
             E3 += H2_sym.block("avaa")("weyx") * T2.block("aava")("uvez") * L3_("xyzuwv");
             E3 -= H2_sym.block("aaca")("uvmz") * T2.block("caaa")("mwxy") * L3_("xyzuwv");
-            std::cout<<"Testting store cu3 branch";
         } else {
             // direct algorithm for 3RDM: Alex's trick JCTC 16, 6343–6357 (2020)
             // t_{uvez} v_{ewxy} D_{xyzuwv} = - t_{uvez} v_{ezxy} D_{uvxy}
