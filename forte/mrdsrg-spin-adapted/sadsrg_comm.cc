@@ -345,7 +345,6 @@ std::vector<double> SADSRG::H2_T2_C0_T2small_sym(BlockedTensor& H2,BlockedTensor
      */
 
     double E1 = 0.0, E2 = 0.0, E3 = 0.0;
-    std::cout<<"Testing function";
     // [H2, T2] L1 from aavv
     // E1 += 0.25 * H2["efxu"] * S2["yvef"] * L1_["uv"] * L1_["xy"];
     E1 += 0.25 * H2_sym["v7,v8,a9,a6,"] * S2["y,v,v7,v8,"] * L1_["a6,v,"] * L1_["a9,y,"];//vvaa
@@ -416,8 +415,11 @@ std::vector<double> SADSRG::H2_T2_C0_T2small_sym(BlockedTensor& H2,BlockedTensor
     if (do_cu3_) {
         if (store_cu3_) {
             timer t("DSRG [H2, T2] L3");
-            E3 += H2.block("vaaa")("ewxy") * T2.block("aava")("uvez") * L3_("xyzuwv");
-            E3 -= H2.block("aaca")("uvmz") * T2.block("caaa")("mwxy") * L3_("xyzuwv");
+            // E3 += H2.block("vaaa")("ewxy") * T2.block("aava")("uvez") * L3_("xyzuwv");
+            // E3 -= H2.block("aaca")("uvmz") * T2.block("caaa")("mwxy") * L3_("xyzuwv");
+            E3 += H2_sym.block("avaa")("weyx") * T2.block("aava")("uvez") * L3_("xyzuwv");
+            E3 -= H2_sym.block("aaca")("uvmz") * T2.block("caaa")("mwxy") * L3_("xyzuwv");
+            std::cout<<"Testting store cu3 branch";
         } else {
             // direct algorithm for 3RDM: Alex's trick JCTC 16, 6343–6357 (2020)
             // t_{uvez} v_{ewxy} D_{xyzuwv} = - t_{uvez} v_{ezxy} D_{uvxy}
