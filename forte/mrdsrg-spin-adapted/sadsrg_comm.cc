@@ -98,7 +98,28 @@ double SADSRG::H2_T1_C0(BlockedTensor& H2, BlockedTensor& T1, const double& alph
     dsrg_time_.add("210", timer.get());
     return E;
 }
+double SADSRG::H2_T1_C0_sym(BlockedTensor& H2_sym, BlockedTensor& T1, const double& alpha, double& C0) {
+    local_timer timer;
 
+    double E = 0.0;
+
+    auto temp = ambit::BlockedTensor::build(tensor_type_, "Temp120", {"aaaa"});
+    // temp["uvxy"] += H2["evxy"] * T1["ue"];
+    temp["u,a7,a6,a9,"] += H2_sym["a7,v8,a9,a6,"] * T1["u,v8,"];//avaa****
+    // temp["uvxy"] -= H2["uvmy"] * T1["mx"];
+    temp["a6,a7,x,a9,"] -= H2_sym["a6,a7,c8,a9,"] * T1["c8,x,"];//aaca
+
+    E += L2_["xyuv"] * temp["uvxy"];
+
+    E *= alpha;
+    C0 += E;
+
+    if (print_ > 3) {
+        outfile->Printf("\n    Time for [H2, T1] -> C0 : %12.3f", timer.get());
+    }
+    dsrg_time_.add("210", timer.get());
+    return E;
+}
 std::vector<double> SADSRG::H2_T2_C0(BlockedTensor& H2, BlockedTensor& T2, BlockedTensor& S2,
                                      const double& alpha, double& C0) {
     local_timer timer;
