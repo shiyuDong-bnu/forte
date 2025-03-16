@@ -79,8 +79,9 @@ def _make_state_info_from_fcidump(fcidump, options):
 def _prepare_forte_objects_from_fcidump(data, filename: str = None):
     options = data.options
     psi4.core.print_out(f"\n  Reading integral information from FCIDUMP file {filename}")
-    fcidump = forte.proc.fcidump_from_file(filename, convert_to_psi4=True)
-
+    #fcidump = forte.proc.fcidump_from_file(filename, convert_to_psi4=True)
+    print("running sydong fcidumppy ")
+    fcidump = np.load(filename+".npy", allow_pickle=True).item()
     irrep_size = {"c1": 1, "ci": 2, "c2": 2, "cs": 2, "d2": 4, "c2v": 4, "c2h": 4, "d2h": 8}
 
     nmo = len(fcidump["orbsym"])

@@ -59,6 +59,11 @@
 
 #include "mcscf/mcscf_orb_grad.h"
 
+#include <ambit/io/hdf5/file.h>
+#include <ambit/io/hdf5/group.h>
+#include <ambit/io/hdf5/dataspace.h>
+#include <ambit/io/hdf5/dataset.h>
+
 using namespace psi;
 using namespace ambit;
 
@@ -950,8 +955,13 @@ void MCSCF_ORB_GRAD::compute_orbital_grad() {
     // build orbital response of energy with a factor of 0.5
     A_["ri"] = 2.0 * F_["ri"];
     A_["ru"] = Fc_["rt"] * D1_["tu"];
-    A_["ru"] += V_["rtvw"] * D2_["tuvw"];
-
+    // sydong debug 
+    ambit::BlockedTensor B_ = ambit::BlockedTensor::build(ambit::CoreTensor, "B", {"gg"});
+    ambit::BlockedTensor C_ = ambit::BlockedTensor::build(ambit::CoreTensor, "C", {"gg"});
+    B_["pq"]=A_["pq"];
+    C_["ru"]=V_["rtvw"] * D2_["utvw"];
+    A_["ru"] += V_["rtvw"] * D2_["utvw"];
+    // end debug
     // screen small gradients to prevent symmetry breaking
     for (const auto& block : A_.block_labels()) {
         A_.block(block).iterate([&](const std::vector<size_t>&, double& value) {
@@ -960,13 +970,39 @@ void MCSCF_ORB_GRAD::compute_orbital_grad() {
         });
     }
 
-    // build orbital gradients
+    // build orbital gradient  
     g_["pq"] = 2.0 * A_["pq"];
     g_["pq"] -= 2.0 * A_["qp"];
-
+     
+    // sydong debug again
+    // ambit::io::hdf5::File test("grad.h5", ambit::io::hdf5::kOpenModeCreateNew, ambit::io::hdf5::kDeleteModeKeepOnClose);
+    // for (const auto& block : A_.block_labels()) {
+    //     ambit::io::hdf5::write(test,A_.block(block));
+    // }
+    // for (const auto& block : F_.block_labels()) {
+    //     ambit::io::hdf5::write(test,F_.block(block));
+    // }
+    // for (const auto& block : Fc_.block_labels()) {
+    //     ambit::io::hdf5::write(test,Fc_.block(block));
+    // }
+    // for (const auto& block : V_.block_labels()) {
+    //     ambit::io::hdf5::write(test,V_.block(block));
+    // }
+    // for (const auto& block : g_.block_labels()) {
+    //     ambit::io::hdf5::write(test,g_.block(block));
+    // }
+    // for (const auto& block : B_.block_labels()) {
+    //     ambit::io::hdf5::write(test,B_.block(block));
+    // }
+    // for (const auto& block : C_.block_labels()) {
+    //     ambit::io::hdf5::write(test,C_.block(block));
+    // }
+    // test.close();
+    
+    
+    //end debug
     // reshape and format to std::shared_ptr<psi::Vector>
     reshape_rot_ambit(g_, grad_);
-
     if (debug_print_) {
         grad_->print();
     }
@@ -1104,8 +1140,25 @@ void MCSCF_ORB_GRAD::set_rdms(std::shared_ptr<RDMs> rdms) {
 
     // change to chemists' notation
     D2_.block("aaaa")("pqrs") = rdms->SF_G2()("prqs");
-    D2_.block("aaaa")("pqrs") += rdms->SF_G2()("qrps");
-    D2_.scale(0.5);
+    outfile->Printf("\n sydong:  unsymmetrize 2RDM\n");
+    // D2_.block("aaaa")("pqrs") += rdms->SF_G2()("qrps");
+    // D2_.scale(0.5);
+
+//     // sdyong debugging ,save gardients in hdf5
+//      ambit::io::hdf5::File test1("rdm.h5", ambit::io::hdf5::kOpenModeCreateNew, ambit::io::hdf5::kDeleteModeKeepOnClose);
+//    // print blocked tensor all blocks
+// //    ambit::io::hdf5::write(test, F_.block("cc"));
+//       ambit::io::hdf5::write(test1, D1_.block("aa"));
+//       ambit::io::hdf5::write(test1, D2_.block("aaaa"));
+//       test1.close();
+// //    ambit::io::hdf5::write(test, Fc_);
+// //    ambit::io::hdf5::write(test, D1_);
+// //    ambit::io::hdf5::write(test, D2_);
+// //    ambit::io::hdf5::write(test, V_);
+// //    ambit::io::hdf5::write(test, A_);
+// //    ambit::io::hdf5::write(test, g_);
+//    // File test1("delete.h5", kOpenModeCreateNew, kDeleteModeDeleteOnClose);
+
 }
 
 void MCSCF_ORB_GRAD::format_1rdm() {

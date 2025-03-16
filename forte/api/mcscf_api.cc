@@ -29,7 +29,7 @@
 #include <pybind11/pybind11.h>
 
 #include "mcscf/mcscf_2step.h"
-
+#include "helpers/helpers.h"
 namespace py = pybind11;
 using namespace pybind11::literals;
 
@@ -37,7 +37,15 @@ namespace forte {
 
 void export_MCSCF(py::module& m) {
     py::class_<MCSCF_2STEP>(m, "MCSCF_2STEP")
-        .def("compute_energy", &MCSCF_2STEP::compute_energy, "Compute the MCSCF energy");
+        .def("compute_energy", &MCSCF_2STEP::compute_energy, "Compute the MCSCF energy")
+        .def("get_rdm1",
+             [](MCSCF_2STEP& mcscf_2step){
+                return ambit_to_np(mcscf_2step.get_rdm1());} ,
+             "return final 1rdm by sydong")
+             .def("get_rdm2",
+                [](MCSCF_2STEP& mcscf_2step){
+                   return ambit_to_np(mcscf_2step.get_rdm2());} ,
+                "return final 1rdm by sydong");
 }
 
 } // namespace forte

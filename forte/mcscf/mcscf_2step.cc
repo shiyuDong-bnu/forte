@@ -36,6 +36,7 @@
 #include "psi4/libmints/wavefunction.h"
 #include "psi4/libdiis/diismanager.h"
 
+#include "helpers/helpers.h"
 #include "base_classes/rdms.h"
 #include "integrals/integrals.h"
 #include "integrals/active_space_integrals.h"
@@ -435,7 +436,7 @@ double MCSCF_2STEP::compute_energy() {
 
     if (ints_->integral_type() != Custom) {
         // fix orbitals for redundant pairs
-        rdms = as_solver_->compute_average_rdms(state_weights_map_, 1, RDMsType::spin_free);
+        rdms = as_solver_->compute_average_rdms(state_weights_map_, 2, RDMsType::spin_free);
         auto F = cas_grad.fock(rdms);
         ints_->set_fock_matrix(F, F);
 
@@ -451,6 +452,10 @@ double MCSCF_2STEP::compute_energy() {
         semi.semicanonicalize(rdms, false, actv_orb_type, false);
 
         cas_grad.canonicalize_final(semi.Ua());
+
+        rdms->rotate(semi.Ua_t(), semi.Ub_t());
+        rdm1_=rdms->SF_G1();
+        rdm2_=rdms->SF_G2();
 
         // pass to wave function
         auto Ca = cas_grad.Ca();
@@ -482,6 +487,11 @@ double MCSCF_2STEP::compute_energy() {
         // throw error if not converged
         if (not converged)
             throw_convergence_error();
+
+        // maybe this not needed ?
+        rdms = as_solver_->compute_average_rdms(state_weights_map_, 2, RDMsType::spin_free);
+        rdm1_=rdms->SF_G1();
+        rdm2_=rdms->SF_G2();
     }
 
     return energy_;

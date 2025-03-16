@@ -61,6 +61,13 @@ class MCSCF_2STEP {
 
     /// Compute the MCSCF energy
     double compute_energy();
+    ambit::Tensor get_rdm1(){
+    //  const std::vector<double>&  data=rdm1_.data();  
+    return rdm1_;};
+    ambit::Tensor get_rdm2(){
+      //  const std::vector<double>&  data=rdm1_.data();  
+      return rdm2_;};
+ 
 
   private:
     /// The ActiveSpaceSolver object
@@ -140,6 +147,11 @@ class MCSCF_2STEP {
 
     /// Final total energy
     double energy_;
+       // sydong final 1rdm
+       ambit::Tensor rdm1_;
+       ambit::Tensor rdm2_;
+       // end sydong
+
 
     /// Solve CI coefficients for the current orbitals
     /// @param fci_ints the pointer of ActiveSpaceIntegrals

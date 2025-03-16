@@ -33,6 +33,7 @@
 
 #include "base_classes/mo_space_info.h"
 #include "integrals/active_space_integrals.h"
+#include <algorithm>
 
 #define FAST_SLATER_RULES 0
 

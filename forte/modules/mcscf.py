@@ -36,6 +36,12 @@ class MCSCF(Module):
             data.active_space_solver, data.state_weights_map, data.scf_info, data.options, data.mo_space_info, data.ints
         )
         energy = mcscf.compute_energy()
+
+        rdm1=mcscf.get_rdm1()
+        rdm2=mcscf.get_rdm2()
+
         data.results.add("mcscf energy", energy, "MCSCF energy", "hartree")
+        data.results.add("mcscf rdm1", rdm1, "MCSCF rdm", "None")
+        data.results.add("mcscf rdm2", rdm2, "MCSCF rdm", "None")
 
         return data

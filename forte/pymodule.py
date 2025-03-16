@@ -203,6 +203,15 @@ def energy_forte(name, **kwargs):
 
         data = MCSCF(active_space_solver_type).run(data)
         energy = data.results.value("mcscf energy")
+        ## added by sydong 
+        rdm1=data.results.value("mcscf rdm1")
+        rdm2=data.results.value("mcscf rdm2")
+        rdm2_reshaped=rdm2.reshape(rdm2.shape[0]**2,rdm2.shape[0]**2)
+        psi4.core.set_variable("CURRENT RDM1", rdm1)
+        psi4.core.set_variable("CURRENT RDM2",rdm2_reshaped )
+        import numpy as np
+        np.testing.assert_equal(rdm2_reshaped.reshape(rdm2.shape),rdm2)
+        ## end  sydong 
 
     # Run a method
     if job_type == "NONE":
