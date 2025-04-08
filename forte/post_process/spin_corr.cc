@@ -5,7 +5,7 @@
  * that implements a variety of quantum chemistry methods for strongly
  * correlated electrons.
  *
- * Copyright (c) 2012-2024 by its authors (see COPYING, COPYING.LESSER,
+ * Copyright (c) 2012-2025 by its authors (see COPYING, COPYING.LESSER,
  * AUTHORS).
  *
  * The copyrights for code used from other parties are included in
@@ -197,7 +197,7 @@ void SpinCorr::spin_analysis() {
         auto Ca_new = psi::linalg::doublet(CA, Ua_full, false, false);
         auto Cb_new = psi::linalg::doublet(CB, Ub_full, false, false);
 
-        as_ints_->ints()->update_orbitals(Ca_new, Cb_new, false);
+        as_ints_->ints()->scf_info()->update_orbitals(Ca_new, Cb_new, false);
 
     } else if (options_->get_str("SPIN_BASIS") == "LOCAL") {
         outfile->Printf("\n  Computing spin correlation in local basis \n");
