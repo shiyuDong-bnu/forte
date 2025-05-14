@@ -169,6 +169,10 @@ def energy_forte(name, **kwargs):
     # Prepare Forte objects
     if "FCIDUMP" in data.options.get_str("INT_TYPE"):
         data = ObjectsFromFCIDUMP(options=kwargs).run(data)
+        ## add by sydong to get state information
+        data_temp = ObjectsFromPsi4(**kwargs).run(data)
+        data.state_weights_map=data_temp.state_weights_map
+        ## end sydong
     elif data.options.get_str("INT_TYPE") == "PYSCF":
         data = ObjectsFromPySCF(kwargs.get("pyscf_obj"), options=kwargs).run(data)
     else:

@@ -153,8 +153,10 @@ def _prepare_forte_objects_from_fcidump(data, filename: str = None):
 
     data.scf_info = forte.SCFInfo(nmopi, doccpi, soccpi, 0.0, epsilon_a, epsilon_b, Ca, Cb)
 
-    state_info = _make_state_info_from_fcidump(fcidump, options)
-    data.state_weights_map = {state_info: [1.0]}
+    ## this two line is commented out by sydong
+    #state_info = _make_state_info_from_fcidump(fcidump, options)
+    #data.state_weights_map = {state_info: [1.0]}
+    ## end sydong
     data.psi_wfn = None
 
     return data, fcidump
