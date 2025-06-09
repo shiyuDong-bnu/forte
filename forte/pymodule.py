@@ -169,11 +169,19 @@ def energy_forte(name, **kwargs):
     # Prepare Forte objects
     if "FCIDUMP" in data.options.get_str("INT_TYPE"):
         data = ObjectsFromFCIDUMP(options=kwargs).run(data)
+
     elif data.options.get_str("INT_TYPE") == "PYSCF":
         data = ObjectsFromPySCF(kwargs.get("pyscf_obj"), options=kwargs).run(data)
     else:
         data = ObjectsFromPsi4(**kwargs).run(data)
-
+    ### sydong modify fcidump  for state average
+    if "FCIDUMP" in data.options.get_str("INT_TYPE"):
+        from forte._forte import (
+            make_state_weights_map,
+        )
+        ## create state weights map
+        data.state_weights_map = make_state_weights_map(data.options, data.mo_space_info)
+    ### end sydong
     start = time.time()
 
     # Rotate orbitals before computation (e.g. localization, MP2 natural orbitals, etc.)

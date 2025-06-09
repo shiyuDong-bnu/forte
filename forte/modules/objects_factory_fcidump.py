@@ -50,7 +50,7 @@ def _make_state_info_from_fcidump(fcidump, options):
         nel = options.get_int("NEL")
 
     multiplicity = fcidump["ms2"] + 1
-    if not options.is_none("MULTIPLICITY"):
+    if not options.is_none("multiplicity"):
         multiplicity = options.get_int("MULTIPLICITY")
 
     # If the user did not specify ms determine the value from the input or
@@ -156,6 +156,11 @@ def _prepare_forte_objects_from_fcidump(data, filename: str = None):
     state_info = _make_state_info_from_fcidump(fcidump, options)
     data.state_weights_map = {state_info: [1.0]}
     data.psi_wfn = None
+    ## sydong
+    data.options.set_int("NEL", nel)
+    multiplicity = fcidump["ms2"] + 1
+    data.options.set_int("MULTIPLICITY", multiplicity )
+    ##
 
     return data, fcidump
 
