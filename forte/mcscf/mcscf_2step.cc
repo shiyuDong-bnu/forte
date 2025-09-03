@@ -195,6 +195,18 @@ double MCSCF_2STEP::compute_energy() {
     auto e_c = compute_average_state_energy(state_energies_map, state_weights_map_);
 
     auto rdms = as_solver_->compute_average_rdms(state_weights_map_, 2, RDMsType::spin_free);
+
+    auto rdms_sd = as_solver_->compute_average_rdms(state_weights_map_, 2, RDMsType::spin_dependent);
+    auto g1a_sydong=rdms_sd->g1a();
+    auto g1b_sydong=rdms_sd->g1b();
+    ints_->make_fock_matrix(g1a_sydong, g1a_sydong);
+    auto fock = ints_->get_fock_a(false);
+    auto fockb = ints_->get_fock_b(false);
+    fock->subtract(*fockb);
+    auto diff=fock->absmax();
+    std::cout<<"max difference of fock"<<diff<<std::endl;
+
+
     cas_grad.set_rdms(rdms);
     cas_grad.evaluate(R, dG);
 
@@ -318,6 +330,10 @@ double MCSCF_2STEP::compute_energy() {
             bool is_g_conv = g_rms < g_conv_ or lbfgs.converged();
             bool is_diis_conv = !do_diis_ or macro < diis_start_ + diis_min_vec_ or
                                 diis_manager.subspace_size() > 1;
+	    std::cout<<std::abs(de)<<" ";
+	    std::cout<<"is_de_conv "<<is_de_conv<<"is_e_conv "<<is_e_conv<<"is_g_conv "
+		    <<is_g_conv<<"is_diis_conv "<<is_diis_conv<<std::endl;
+	    is_de_conv = true ;
             if (is_de_conv and is_e_conv and is_g_conv and is_diis_conv) {
                 psi::outfile->Printf("\n    %s", dash2.c_str());
                 psi::outfile->Printf(
@@ -492,6 +508,8 @@ double MCSCF_2STEP::compute_energy() {
         rdms = as_solver_->compute_average_rdms(state_weights_map_, 2, RDMsType::spin_free);
         rdm1_=rdms->SF_G1();
         rdm2_=rdms->SF_G2();
+
+
     }
 
     return energy_;

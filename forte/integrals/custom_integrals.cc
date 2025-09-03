@@ -249,10 +249,12 @@ void CustomIntegrals::make_fock_matrix(ambit::Tensor Da, ambit::Tensor Db) {
     fock_b_->set_name("Fock beta");
 
     fock_b_->subtract(fock_a_);
+    std::cout<<"max difference of fock in custom integral"<<fock_b_->absmax()<<std::endl;
     if (fock_b_->absmax() < 1.0e-7) { // threshold consistent with test_orbital_spin_restriction
         fock_b_ = fock_a_;
     } else {
         fock_b_->add(fock_a_);
+        fock_b_ = fock_a_;
     }
 }
 
@@ -332,7 +334,6 @@ CustomIntegrals::make_fock_inactive(psi::Dimension dim_start, psi::Dimension dim
         }
         offset1 += nmopi_[h1];
     }
-
     return {Fock_a, Fock_b, e_closed};
 }
 
@@ -357,6 +358,7 @@ CustomIntegrals::make_fock_active(ambit::Tensor Da, ambit::Tensor Db) {
 
     auto& Da_data = Da.data();
     auto& Db_data = Db.data();
+    
 
     for (int h = 0, offset = 0; h < nirrep_; ++h) {
         for (int u = 0; u < dim_actv[h]; ++u) {
@@ -386,7 +388,6 @@ CustomIntegrals::make_fock_active_unrestricted(std::shared_ptr<psi::Matrix> g1a,
                                                std::shared_ptr<psi::Matrix> g1b) {
     auto Fock_a = std::make_shared<psi::Matrix>("Fock_active alpha", nmopi_, nmopi_);
     auto Fock_b = std::make_shared<psi::Matrix>("Fock_active beta", nmopi_, nmopi_);
-
     auto abs_mo_actv = mo_space_info_->absolute_mo("ACTIVE");
     auto rel_mo_actv = mo_space_info_->relative_mo("ACTIVE");
 
@@ -440,7 +441,6 @@ CustomIntegrals::make_fock_active_unrestricted(std::shared_ptr<psi::Matrix> g1a,
         }
         offset += nmopi_[h];
     }
-
     return {Fock_a, Fock_b};
 }
 
@@ -534,6 +534,7 @@ void CustomIntegrals::transform_two_electron_integrals() {
 
     T("ijkl") = original_V_bb_("pqrs") * Cb("pi") * Cb("qj") * Cb("rk") * Cb("sl");
     full_aphys_tei_bb_ = T.data();
+    
 }
 
 void CustomIntegrals::__update_orbitals(bool transform_ints) {

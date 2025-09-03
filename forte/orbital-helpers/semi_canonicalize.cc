@@ -209,7 +209,12 @@ void SemiCanonical::prepare_matrix_blocks(std::shared_ptr<RDMs> rdms, ActiveOrbi
     // Fock alpha should be the same as beta
     // TODO: this need to be changed if UHF reference is available
     auto fock = ints_->get_fock_a(false);
+    auto fockb = ints_->get_fock_b(false);
     if (fock != ints_->get_fock_b(false)) {
+	fock->subtract(*fockb);
+	fock->print_out();
+	auto diff=fock->absmax();
+	std::cout<<"max difference of fock"<<diff<<std::endl;
         throw std::runtime_error("Currently impossible to semicanonicalize unrestricted orbitals!");
     }
 
